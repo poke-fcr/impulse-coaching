@@ -1,0 +1,29 @@
+$min-height-info-box: 80px;
+.contact-us-card{
+    background-color: var(--background-color-primary);
+}
+
+.info-cards {
+    background-color: var(--highlight-color);
+    color: var(--text-color-primary);
+    min-height: $min-height-info-box;
+}
+
+.heading {
+    color: var(--text-color-secondary);
+    margin: 16px;
+}
+
+.info-group-card{
+    // @media only screen and (min-width: 768px)  {
+    //     border-right: 1px solid whitesmoke; 
+    // }
+  
+    // margin: 32px 0;
+}
+
+.vr-height{
+    min-height: $min-height-info-box *3;
+    color:aliceblue;
+    align-self: center;
+}

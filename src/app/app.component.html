@@ -1,6 +1,6 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-light nav-style">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Impulse Coaching</a>
+    <a class="navbar-brand" routerLink="">Impulse Coaching</a>
     <button
       class="navbar-toggler"
       (click)="collapsed = !collapsed"
@@ -20,11 +20,24 @@
       style="justify-content:flex-end"
     >
       <ul class="navbar-nav" >
+        <!-- <li class="nav-item">
+          <a class="nav-link"
+          routerLink=""
+          routerLinkActive="active"
+          (click)="collapsed = true"
+          aria-current="page">Home</a>
+        </li> -->
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link"
+          routerLinkActive="active"
+          (click)="collapsed = true"
+          routerLink="contact-us">Contact us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">About us</a>
+          <a class="nav-link"
+          routerLink="about-us"
+          routerLinkActive="active"
+          href="#">About us</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Courses</a>
