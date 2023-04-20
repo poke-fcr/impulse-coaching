@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "dist/impulse-classes",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "site": "impulse-coaching"
+  }
+}
