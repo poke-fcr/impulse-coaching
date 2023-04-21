@@ -4,14 +4,17 @@ $min-height-info-box: 80px;
 }
 
 .info-cards {
-    background-color: var(--highlight-color);
+    // background-color: var(--highlight-color);
     color: var(--text-color-primary);
-    min-height: $min-height-info-box;
+    // min-height: $min-height-info-box;
+}
+
+.text {
+    color: var(--text-color-primary);
 }
 
 .heading {
     color: var(--text-color-secondary);
-    margin: 16px;
 }
 
 .info-group-card{
@@ -25,5 +28,15 @@ $min-height-info-box: 80px;
 .vr-height{
     min-height: $min-height-info-box *3;
     color:aliceblue;
-    align-self: center;
+
 }
+
+.responsive-iframe {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }

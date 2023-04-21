@@ -1,8 +1,14 @@
-.test {
-    color: var(--color-link)
+.heading {
+    color: var(--text-color-secondary);
+    font-weight: 600;
 }
 
 .nav-style{
     background-color: var(--background-color-secondary);
     box-shadow: 0 0 4px 0;
+}
+
+.app-common-css{
+    padding-top: 50px;
+    color: var(--text-color-primary);
 }
