@@ -1,0 +1,14 @@
+.heading {
+  color: var(--text-color-secondary);
+  font-weight: 600;
+}
+
+.features-card {
+    background-color: var(--background-color-primary);
+}
+
+.features-sub-card{
+    background-color: var(--highlight-color);
+    height: 112px;
+    cursor: pointer;
+}

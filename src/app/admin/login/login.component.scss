@@ -1,0 +1,14 @@
+.login-card{
+    background-color: var(--background-color-primary);
+}
+
+.login-middle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.heading{
+    color: var(--text-color-secondary);
+    font-weight: 600;
+}

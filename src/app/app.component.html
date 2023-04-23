@@ -20,6 +20,15 @@
       style="justify-content: flex-end"
     >
       <ul class="navbar-nav">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            (click)="collapsed = true"
+            routerLink=""
+            ><i class="bi bi-house"></i></a
+          >
+        </li>
         <!-- <li class="nav-item">
           <a class="nav-link"
           routerLink=""
@@ -27,8 +36,8 @@
           (click)="collapsed = true"
           aria-current="page">Home</a>
         </li> -->
-
-        <li class="nav-item">
+        
+        <!-- <li class="nav-item">
           <a class="nav-link" href="#">Courses</a>
         </li>
         <li class="nav-item">
@@ -36,10 +45,10 @@
         </li>
         <li class="nav-item">
           <a class="nav-link">Results</a>
-        </li>
+        </li> 
         <li class="nav-item">
           <a class="nav-link">Gallery</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a
             class="nav-link"
@@ -58,6 +67,11 @@
             >About us</a
           >
         </li>
+        <li class="nav-item">
+          <a class="nav-link"  
+          routerLink="admin"
+          routerLinkActive="active">Admin sign in</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -65,4 +79,6 @@
 
 <div class="app-common-css">
   <router-outlet></router-outlet>
+ 
 </div>
+<app-footer></app-footer>

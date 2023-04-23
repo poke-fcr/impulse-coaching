@@ -1,0 +1,53 @@
+<div class="footer">
+  <h3 class="heading">Hey, you still here? Lets connect.</h3>
+  <div class="row" click="comingSoon()">
+    <div class="col-md-4 flex-column">
+      <button class="button" routerLink="contact-us">Contact info</button>
+      <button
+        class="button"
+        routerLink="contact-us"
+        [queryParams]="{ queryForm: true }"
+      >
+        I have a query.
+      </button>
+    </div>
+    <div class="col-md-4 flex-column">
+      <div>
+        <a routerLink="coming-soon" class="links"
+          >About this exquisite website</a
+        >
+      </div>
+      <div>
+        <a routerLink="coming-soon" class="links">Credits and libraries</a>
+      </div>
+      <div>
+        <a routerLink="coming-soon" class="links"
+          >Disclaimer sand copyright statement</a
+        >
+      </div>
+    </div>
+    <div class="col-md-4 flex-column">
+      <img
+        routerLink="coming-soon"
+        class="image"
+        src="./../../../assets/social/linkedin.png"
+        height="32px"
+        width="32px"
+      />
+      <img
+        routerLink="coming-soon"
+        class="image"
+        src="./../../../assets/social/twitter.png"
+        height="32px"
+        width="32px"
+      />
+      <img
+        routerLink="coming-soon"
+        class="image"
+        src="./../../../assets/social/instagram.png"
+        height="32px"
+        width="32px"
+      />
+    </div>
+  </div>
+</div>

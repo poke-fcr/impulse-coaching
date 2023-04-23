@@ -8,13 +8,17 @@ import { HomeComponent } from './components/home/home.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { CreditsComponent } from './components/credits/credits.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ContactUsComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    FooterComponent,
+    CreditsComponent
   ],
   imports: [
     BrowserModule,
