@@ -10,6 +10,10 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CreditsComponent } from './components/credits/credits.component';
+import { GalleryComponent } from './components/gallery/gallery.component';
+import { BatchesHomeComponent } from './components/batches-home/batches-home.component';
+import { HttpClientModule } from '@angular/common/http'
+import { AppService } from './app-service.service';
 
 @NgModule({
   declarations: [
@@ -18,15 +22,18 @@ import { CreditsComponent } from './components/credits/credits.component';
     ContactUsComponent,
     AboutUsComponent,
     FooterComponent,
-    CreditsComponent
+    CreditsComponent,
+    GalleryComponent,
+    BatchesHomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    NgbCarouselModule
+    NgbCarouselModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

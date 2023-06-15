@@ -28,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren:()=> import('./admin/admin-routing.module').then(v => v.AdminRoutingModule)
+    loadChildren:()=> import('./admin/admin.module').then(v => v.AdminModule)
   },
   {
     path: '**',

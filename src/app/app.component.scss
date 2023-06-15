@@ -9,12 +9,13 @@
 }
 
 .app-common-css{
+    min-height: 100vh;
     padding-top: 50px;
     color: var(--text-color-primary);
 }
 
 app-footer{
     bottom: 0 !important;
-    position: absolute;
+    position: relative !important;
     width: 100%;
 }

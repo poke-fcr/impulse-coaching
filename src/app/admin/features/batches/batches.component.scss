@@ -1,0 +1,14 @@
+.heading {
+    color: var(--text-color-secondary);
+    font-weight: 600;
+  }
+
+.batches-row{
+    display: flex;
+    justify-content: space-between;
+}
+
+.batch-cards{
+  background-color: var(--background-color-primary);
+  min-height: 128px;
+}

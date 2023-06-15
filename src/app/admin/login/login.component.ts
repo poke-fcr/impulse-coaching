@@ -15,5 +15,8 @@ export class LoginComponent {
     if(email === 'impulse.guna@gmail.com' && password === 'impulse@123'){
       this.router.navigate(['admin/dashboard'])
     }
+    else{
+      alert("Go back to reality!")
+    }
   }
 }

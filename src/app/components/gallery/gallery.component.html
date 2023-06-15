@@ -1,0 +1,52 @@
+<div class="gallery-container p-2 mb-3">
+  <h3 class="heading">Impulse Scrapbook</h3>
+  <div class="px-md-5">
+    <div class="gallery-flex">
+      <button
+        [disabled]="imageIndex === 0"
+        class="btn m-2 d-none d-md-block"
+        (click)="imageIndex = (imageIndex - 1) % imageObjectArr.length"
+      >
+        <i class="display-6 bi bi-skip-backward-circle"></i>
+      </button>
+      <div>
+        <img
+          *ngIf="imageObjectArr[imageIndex].image"
+          class="img-fluid"
+          [src]="imageObjectArr[imageIndex].image"
+        />
+      </div>
+      <button
+        [disabled]="imageIndex === imageObjectArr.length - 1"
+        class="btn m-2 d-none d-md-block"
+        (click)="imageIndex = (imageIndex + 1) % imageObjectArr.length"
+      >
+        <i class="display-6 bi bi-skip-forward-circle"></i>
+      </button>
+    </div>
+    <h2
+      class="text-center mx-md-2 mb-1"
+      *ngIf="imageObjectArr[imageIndex].caption"
+    >
+      {{ imageObjectArr[imageIndex].caption }}
+    </h2>
+    <div class="d-md-none d-lg-none d-xl-none">
+      <div class="gallery-flex">
+        <button
+          [disabled]="imageIndex === 0"
+          class="btn m-2"
+          (click)="imageIndex = (imageIndex - 1) % imageObjectArr.length"
+        >
+          <i class="display-6 bi bi-skip-backward-circle"></i>
+        </button>
+        <button
+          [disabled]="imageIndex === imageObjectArr.length - 1"
+          class="btn m-2"
+          (click)="imageIndex = (imageIndex + 1) % imageObjectArr.length"
+        >
+          <i class="display-6 bi bi-skip-forward-circle"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

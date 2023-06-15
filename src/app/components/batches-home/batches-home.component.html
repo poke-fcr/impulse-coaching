@@ -1,0 +1,30 @@
+<div class="p-2 my-3">
+  <h3 class="heading">Batches and Timings</h3>
+  <span class="text-muted"
+    >Please regulary check notices for any updates in timings</span
+  >
+  <div class="row g-2">
+    <div class="col-md-6" *ngFor="let batch of batches">
+      <div class="p-2 batch-cards shadow rounded">
+        <h3 class="heading">{{ batch.batchName || "Batch" }}</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Day</th>
+              <th scope="col">Start Time</th>
+              <th scope="col">End Time</th>
+            </tr>
+          </thead>
+
+          <ng-container *ngFor="let wd of batch?.weekDay">
+            <tr>
+              <td scope="row">{{ wd.day | titlecase }}</td>
+              <td>{{ wd?.startTime || "Holiday" }}</td>
+              <td>{{ wd?.endTime || "Holiday" }}</td>
+            </tr>
+          </ng-container>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
