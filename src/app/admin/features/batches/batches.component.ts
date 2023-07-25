@@ -19,7 +19,18 @@ export class BatchesComponent implements OnInit {
     private ngbModal: NgbModal,
     private fb: FormBuilder
   ) {}
-  weekDays: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+  editMode: boolean = false
+  batchId: string | null = null
+  weekDays: string[] = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
   batches: any[] = [];
   batchStatus: 'fetching' | 'done' | 'error' = 'fetching';
   batchForm = this.fb.group({
@@ -50,12 +61,12 @@ export class BatchesComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.getBatches()
+    this.getBatches();
   }
 
-  getBatches(){
-    this.batchStatus = 'fetching'
-    this.batches =[]
+  getBatches() {
+    this.batchStatus = 'fetching';
+    this.batches = [];
     this.appSvc.getBatches().subscribe({
       next: (data: any) => {
         if (typeof data === 'object') {
@@ -71,72 +82,196 @@ export class BatchesComponent implements OnInit {
     });
   }
 
-  openFormModal(content: any) {
+  openFormModal(dialogRef: any) {
     // this.formModal.show();
-    this.ngbModal.open(content, { size: 'lg', centered: true });
+    let modalRef = this.ngbModal.open(dialogRef, { size: 'lg', centered: true });
+
+   modalRef.dismissed.subscribe({next:(_r: any)=>{
+    this.editMode = false
+    this.batchForm.reset()
+    // this.batchForm.clearValidators()
+    console.log('dismissed')
+   }})
+   modalRef.closed.subscribe({next:(_r: any)=>{
+    this.editMode = false
+    this.batchForm.reset()
+    console.log('closed')
+   }})
   }
   saveSomeThing() {
     // confirm or save something
     // this.formModal.hide();
   }
 
-  addBatch() {
+  addBatch(editmode= false) {
     this.batchForm.valid;
     console.log(this.batchForm.value);
-    let weekDay: any[] = []
-    console.log(this.batchForm)
-    console.log(this.batchForm.get(['weekDayForm','sundayStartTime'])?.value)
-    console.log(this.batchForm.get('sundayStartTime'))
-    
-    this.weekDays.forEach((day: string)=>{
+    let weekDay: any[] = [];
+    console.log(this.batchForm);
+    console.log(this.batchForm.get(['weekDayForm', 'sundayStartTime'])?.value);
+    console.log(this.batchForm.get('sundayStartTime'));
+
+    this.weekDays.forEach((day: string) => {
       let weekObj = {
         day: day,
-        startTime: this.batchForm.get(['weekDayForm' ,day.toLowerCase() +'StartTime'])?.value,
-        endTime: this.batchForm.get(['weekDayForm',day.toLowerCase() +'EndTime'])?.value,
-        isHoliday: this.batchForm.get(['weekDayForm','is'+ day + 'Holiday'])?.value
-      }
-      weekDay.push(weekObj)
-    })
+        startTime: this.batchForm.get([
+          'weekDayForm',
+          day.toLowerCase() + 'StartTime',
+        ])?.value,
+        endTime: this.batchForm.get([
+          'weekDayForm',
+          day.toLowerCase() + 'EndTime',
+        ])?.value,
+        isHoliday: this.batchForm.get(['weekDayForm', 'is' + day + 'Holiday'])
+          ?.value,
+      };
+      weekDay.push(weekObj);
+    });
     let reqBody = {
-      batchId: new Date().getTime(),
+      batchId: editmode ? this.batchId : new Date().getTime(),
       batchName: this.batchForm.get('batchName')?.value,
       weekDay: weekDay,
     };
-    this.appSvc.saveBatch(reqBody).subscribe({next: (resp:any)=>{
-      this.batchForm.reset()
-      console.log('batch added successfully')
-      
-      this.getBatches()
-      this.ngbModal.dismissAll()
-    }, error: (_err)=>{
-      console.log('batch added failed')
-    }})
+    this.appSvc.saveBatch(reqBody).subscribe({
+      next: (resp: any) => {
+        this.batchForm.reset();
+        console.log('batch added successfully');
+        this.getBatches();
+        this.ngbModal.dismissAll();
+      },
+      error: (_err) => {
+        console.log('batch added failed');
+      },
+    });
     console.log(reqBody);
   }
 
-  disableStartAndEndTimeFields(day: string, checked: boolean){
-    let startTimeId = day.toLowerCase() + 'StartTime'
-    let endTimeId = day.toLowerCase() + 'EndTime'
-    if(checked){
-      this.batchForm.get(startTimeId)?.disable()
-      this.batchForm.get(endTimeId)?.disable()
+  disableStartAndEndTimeFields(day: string) {
+    let checked = this.batchForm.get([
+      'weekDayForm',
+      'is'+day + 'Holiday',
+    ])?.value || false
+    console.log(checked)
+    // let startTimeId = day.toLowerCase() + 'StartTime';
+    // let checked = this.batchForm.get([
+    //   'weekDayForm',
+    //   'is'+day + 'Holiday',
+    // ])?.value || false
+    // let endTimeId = day.toLowerCase() + 'EndTime';
+    if (checked) {
+
+      this.batchForm.get([
+          'weekDayForm',
+          day.toLowerCase() + 'StartTime',
+        ])?.disable()
+        this.batchForm.get([
+          'weekDayForm',
+          day.toLowerCase() + 'EndTime',
+        ])?.disable()
+
+    //   this.batchForm.get(startTimeId)?.disable();
+    //   this.batchForm.get(endTimeId)?.disable();
     } else {
-      this.batchForm.get(startTimeId)?.enable()
-      this.batchForm.get(endTimeId)?.enable()
+      this.batchForm.get([
+        'weekDayForm',
+        day.toLowerCase() + 'EndTime',
+      ])?.enable()
+
+      this.batchForm.get([
+        'weekDayForm',
+        day.toLowerCase() + 'StartTime',
+      ])?.enable()
+    //   this.batchForm.get(startTimeId)?.enable();
+    //   this.batchForm.get(endTimeId)?.enable();
     }
   }
 
-  deleteBatch(batchId: string){
-    this.batchStatus = 'fetching'
-      this.appSvc.deleteBatch(batchId).subscribe({next:()=>{
-        this.getBatches()
-      }, error: ()=>{
-        this.batchStatus ='error'
-      }})
+  deleteBatch(batchId: string) {
+    this.batchStatus = 'fetching';
+    this.appSvc.deleteBatch(batchId).subscribe({
+      next: () => {
+        this.getBatches();
+      },
+      error: () => {
+        this.batchStatus = 'error';
+      },
+    });
   }
 
-  editBatch(batch: any){
-    alert('fuctionality coming soon, kindly delete and add a batch.')
+  editBatch(batch: any, dialogRef: any) {
+    this.editMode = true
+    console.log(batch)
+    this.batchId = batch.batchId 
+    this.batchForm.get('batchName')?.setValue(batch.batchName)
+    batch.weekDay.forEach((dayObj: any) => {
+      let day = dayObj.day
+      this.batchForm.get([
+        'weekDayForm',
+        day.toLowerCase() + 'StartTime',
+      ])?.setValue(dayObj.startTime)
+
+      this.batchForm.get([
+        'weekDayForm',
+        day.toLowerCase() + 'EndTime',
+      ])?.setValue(dayObj.endTime)
+
+      if(dayObj.startTime ===''  && dayObj.endTime===''){
+        this.batchForm.get([
+          'weekDayForm',
+          day.toLowerCase() + 'StartTime',
+        ])?.disable()
+        this.batchForm.get([
+          'weekDayForm',
+          day.toLowerCase() + 'EndTime',
+        ])?.disable()
+
+        this.batchForm.get([
+          'weekDayForm',
+          'is'+ day + 'Holiday',
+        ])?.setValue(true)
+      }
+      
+    });
+   let modalRef = this.ngbModal.open(dialogRef, { size: 'lg', centered: true });
+
+   modalRef.dismissed.subscribe({next:(_r: any)=>{
+    this.editMode = false
+    this.batchForm.reset()
+    // this.batchForm.clearValidators()
+    console.log('dismissed')
+   }})
+   modalRef.closed.subscribe({next:(_r: any)=>{
+    this.editMode = false
+    this.batchForm.reset()
+    console.log('closed')
+   }})
+    // alert('fuctionality coming soon, kindly delete and add a batch.');
+  }
+
+  sameTimeAsMonday() {
+    let mondayStartTime =  this.batchForm.get([
+      'weekDayForm',
+      'mondayStartTime',
+    ])?.value || null
+    let mondayEndTime =  this.batchForm.get([
+      'weekDayForm',
+      'mondayEndTime',
+    ])?.value || null
+    if(mondayEndTime && mondayStartTime){
+      this.weekDays.forEach(w=>{
+        this.batchForm.get([
+          'weekDayForm',
+          w.toLowerCase() + 'StartTime',
+        ])?.setValue(mondayStartTime)
+        this.batchForm.get([
+          'weekDayForm',
+          w.toLowerCase() + 'EndTime',
+        ])?.setValue(mondayEndTime)
+      })
+     
+    }
+    else
+    alert('Enter start and end time in monday field first.')
+    console.log(mondayStartTime)
   }
 }
-

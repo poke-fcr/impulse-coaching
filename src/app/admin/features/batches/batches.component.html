@@ -60,7 +60,7 @@
           
           >Delete</button>
           <button class="btn btn-secondary m-2"
-          (click)="editBatch(batch)"
+          (click)="editBatch(batch, content)"
           >Edit</button>
         </div>
       </div>
@@ -121,13 +121,16 @@
               [id]="'is' + day + 'Holiday'"
               type="checkbox"
               class="form-check-input"
-              id="isSundayHoliday"
               [formControlName]="'is' + day + 'Holiday'"
+              (change)="disableStartAndEndTimeFields(day)"
             />
             <label class="form-check-label" [for]="'is' + day + 'Holiday'"
               >{{day}} holiday</label
             >
           </div>
+          <ng-container *ngIf="day==='Monday'">
+            <a class="link pe-auto" (click)="sameTimeAsMonday()">Populate below fields with monday time.</a>
+          </ng-container>
         </div>
       </div>
     </form>
@@ -141,6 +144,15 @@
     >
       Add
     </button>
+    <button
+    *ngIf="editMode"
+    [disabled]="!batchForm.valid"
+    type="submit"
+    class="btn btn-primary"
+    (click)="addBatch(true)"
+  >
+    Modify
+  </button>
     <button
       type="button"
       class="btn btn-light"
