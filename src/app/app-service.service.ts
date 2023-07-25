@@ -5,8 +5,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AppService {
-  baseUrl: string = 'https://impulse-coaching-firebase-service.onrender.com';
-  localHostBaseUrl = 'http://localhost:8080';
+  // baseUrl: string = 'https://impulse-coaching-firebase-service.onrender.com';
+  baseUrl: string = 'http://localhost:8080';
+ 
   apiEndPoints = {
     saveBatch: `/batch/saveBatch`,
     getBatches: '/batch/getBatches',

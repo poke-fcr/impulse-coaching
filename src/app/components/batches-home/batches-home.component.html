@@ -1,8 +1,33 @@
 <div class="p-2 my-3">
   <h3 class="heading">Batches and Timings</h3>
   <span class="text-muted"
-    >Please regulary check notices for any updates in timings</span
+    >Note that below are generalized batch timings.</span
   >
+
+  <ng-container *ngIf="batchStatus === 'fetching'">
+    <div class="my-5 text-center">
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+    </div>
+   
+  </ng-container>
+  <ng-container *ngIf="batchStatus === 'error'">
+    Unable to load batches. Kindly call us on our contact number.
+  </ng-container>
+  <ng-container *ngIf="batchStatus === 'done'">
   <div class="row g-2">
     <div class="col-md-6" *ngFor="let batch of batches">
       <div class="p-2 batch-cards shadow rounded">
@@ -27,4 +52,5 @@
       </div>
     </div>
   </div>
+  </ng-container>
 </div>

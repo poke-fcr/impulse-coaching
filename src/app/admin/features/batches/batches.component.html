@@ -1,10 +1,37 @@
 <div class="mt-3 m-2">
   <div class="batches-row mb-2">
     <h3 class="heading">Batches and Timings</h3>
-    <button class="btn btn-primary" (click)="openFormModal(content)">
+    <button 
+    [disabled]="batchStatus !== 'done'"
+    class="btn btn-primary" (click)="openFormModal(content)">
       Add new batch
     </button>
   </div>
+ 
+  <ng-container *ngIf="batchStatus === 'fetching'">
+    <div class="my-5 text-center">
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+    </div>
+   
+  </ng-container>
+  <ng-container *ngIf="batchStatus === 'error'">
+    Unable to load batches. Kindly call the developer.
+  </ng-container>
+  <ng-container *ngIf="batchStatus === 'done'">
   <div class="row g-2">
     <div class="col-md-6" *ngFor="let batch of batches">
       <div class="p-2 batch-cards shadow rounded">
@@ -32,11 +59,14 @@
           
           
           >Delete</button>
-          <button class="btn btn-secondary m-2">Edit</button>
+          <button class="btn btn-secondary m-2"
+          (click)="editBatch(batch)"
+          >Edit</button>
         </div>
       </div>
     </div>
   </div>
+  </ng-container>
 </div>
 
 <ng-template #content let-modal>

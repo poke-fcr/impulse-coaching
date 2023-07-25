@@ -21,7 +21,7 @@ export class BatchesComponent implements OnInit {
   ) {}
   weekDays: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   batches: any[] = [];
-  batchStatus = 'fetching';
+  batchStatus: 'fetching' | 'done' | 'error' = 'fetching';
   batchForm = this.fb.group({
     batchName: new FormControl('', Validators.required),
     weekDayForm: this.fb.group({
@@ -55,6 +55,7 @@ export class BatchesComponent implements OnInit {
 
   getBatches(){
     this.batchStatus = 'fetching'
+    this.batches =[]
     this.appSvc.getBatches().subscribe({
       next: (data: any) => {
         if (typeof data === 'object') {
@@ -126,10 +127,16 @@ export class BatchesComponent implements OnInit {
   }
 
   deleteBatch(batchId: string){
+    this.batchStatus = 'fetching'
       this.appSvc.deleteBatch(batchId).subscribe({next:()=>{
         this.getBatches()
       }, error: ()=>{
+        this.batchStatus ='error'
       }})
+  }
+
+  editBatch(batch: any){
+    alert('fuctionality coming soon, kindly delete and add a batch.')
   }
 }
 
