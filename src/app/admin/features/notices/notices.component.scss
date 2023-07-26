@@ -1,0 +1,20 @@
+.heading {
+    color: var(--text-color-secondary);
+    font-weight: 600;
+    padding-bottom: 4px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .subheading {
+    color: var(--text-color-secondary);
+  }
+
+.notice-row{
+    display: flex;
+    justify-content: space-between;
+}
+
+.notice-cards{
+    background-color: var(--background-color-primary);
+    min-height: 128px;
+  }

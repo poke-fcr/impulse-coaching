@@ -1,0 +1,115 @@
+<div class="mt-3 m-2">
+  <div class="notice-row mb-2">
+    <div>
+      <h3 class="heading">Notices</h3>
+      <span class="text-info mb-4"
+        >Kindly preview your notices on homepage.</span
+      >
+    </div>
+    <button
+      style="height: fit-content"
+      [disabled]="noticeStatus !== 'done'"
+      class="btn btn-primary"
+      (click)="openFormModal(content)"
+    >
+      Add new notice
+    </button>
+  </div>
+
+  <ng-container *ngIf="noticeStatus === 'fetching'">
+    <div class="my-5 text-center">
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="noticeStatus === 'error'">
+    <span class="text-danger"
+      >Unable to load batches. Kindly contact developer.</span
+    >
+  </ng-container>
+  <ng-container *ngIf="noticeStatus === 'done'">
+    <div class="row g-2">
+      <div class="col-md-6" *ngFor="let notice of notices">
+        <div class="p-2 notice-cards shadow rounded">
+          <h3 class="heading">{{ notice.title || "notice" }}</h3>
+          <div [innerHTML]="notice.description"></div>
+          <div>
+            <button
+              class="btn btn-danger m-2"
+              (click)="deleteNotice(notice.noticeId)"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add Notice</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="noticeForm">
+      <div class="form-group mb-2">
+        <label for="batchName">Title</label>
+        <input
+          id="title"
+          class="form-control"
+          type="text"
+          formControlName="title"
+        />
+      </div>
+      <div class="form-group mb-2">
+        <label for="description"> Description</label>
+        <ckeditor
+        #description
+        formControlName="description"
+        [editor]="Editor" data="<p>You can add text with styling, hyper-links, ordered list and much...</p>"></ckeditor>
+    </div>
+      </form>
+
+      <!-- app.component.html -->
+
+     
+  </div>
+  <div class="modal-footer">
+    <button
+      [disabled]="!noticeForm.valid || noticeStatus === 'fetching'"
+      type="submit"
+      class="btn btn-primary"
+      (click)="addNotice()"
+    >
+      Add
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-light"
+      (click)="modal.close('Close click')"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>

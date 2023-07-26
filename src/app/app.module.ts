@@ -14,6 +14,13 @@ import { GalleryComponent } from './components/gallery/gallery.component';
 import { BatchesHomeComponent } from './components/batches-home/batches-home.component';
 import { HttpClientModule } from '@angular/common/http'
 import { AppService } from './app-service.service';
+import { GalleryHomeComponent } from './components/gallery-home/gallery-home.component';
+import { AngularFireModule } from '@angular/fire/compat'
+import { AngularFireStorageModule} from '@angular/fire/compat/storage'
+import { FirebaseOptions } from 'firebase/app';
+import { environment } from 'src/environments/environment.development';
+import { AngularFireDatabaseModule} from '@angular/fire/compat/database'
+import { FileUploadService } from './file-upload.service';
 
 @NgModule({
   declarations: [
@@ -24,16 +31,20 @@ import { AppService } from './app-service.service';
     FooterComponent,
     CreditsComponent,
     GalleryComponent,
-    BatchesHomeComponent
+    BatchesHomeComponent,
+    GalleryHomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     NgbCarouselModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
+    AngularFireDatabaseModule
   ],
-  providers: [AppService],
+  providers: [AppService, FileUploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

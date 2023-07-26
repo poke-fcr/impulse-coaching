@@ -4,6 +4,8 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { HomeComponent } from './components/home/home.component';
 import { CreditsComponent } from './components/credits/credits.component';
+import { GalleryComponent } from './components/gallery/gallery.component';
+import { GalleryHomeComponent } from './components/gallery-home/gallery-home.component';
 
 const routes: Routes = [
   {
@@ -29,6 +31,11 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren:()=> import('./admin/admin.module').then(v => v.AdminModule)
+  },
+  {
+    path: 'gallery',
+    pathMatch: 'full',
+    component: GalleryHomeComponent,
   },
   {
     path: '**',

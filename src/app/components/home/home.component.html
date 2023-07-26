@@ -6,48 +6,51 @@
   [wrap]="true"
 >
   <ng-template ngbSlide>
-    
     <div class="picsum-img-wrapper d-md-none d-lg-none d-xl-none d-xxl-none">
-      <img 
-      class="w-100"
-      src="./../../../assets/slider-3-mobile.jpg" alt="My image  description 2" />
-    
+      <img
+        class="w-100"
+        src="./../../../assets/slider-3-mobile.jpg"
+        alt="My image  description 2"
+      />
     </div>
     <div class="picsum-img-wrapper d-none d-md-block">
-      <img 
-      class="w-100"
-      src="./../../../assets/slider-3.jpg" alt="My image  description 2" />
-    
+      <img
+        class="w-100"
+        src="./../../../assets/slider-3.jpg"
+        alt="My image  description 2"
+      />
     </div>
-   
+
     <div class="carousel-caption mb-5">
-        <h3>ASK, LEARN & LEAD IT</h3>
-        <p>
-          With Better Score, Better Career & Ultimately by Building Better India
-          with the Power of Knowledge.
-        </p>
-      </div>
-  
+      <h3>ASK, LEARN & LEAD IT</h3>
+      <p>
+        With Better Score, Better Career & Ultimately by Building Better India
+        with the Power of Knowledge.
+      </p>
+    </div>
   </ng-template>
   <ng-template ngbSlide>
     <div class="carousel-caption mb-5">
       <h3>LEARN AND EXCEL</h3>
       <p>
-       Impulse coaching provides correct guidance, councelling and accurate study material. You can definately acheive better results.
+        Impulse coaching provides correct guidance, councelling and accurate
+        study material. You can definately acheive better results.
       </p>
     </div>
-   
+
     <div class="picsum-img-wrapper d-md-none d-lg-none d-xl-none d-xxl-none">
-      <img 
-      class="w-100"
-      src="./../../../assets/slider-1-mobile.jpg" alt="My image  description 2" />
-    
+      <img
+        class="w-100"
+        src="./../../../assets/slider-1-mobile.jpg"
+        alt="My image  description 2"
+      />
     </div>
     <div class="picsum-img-wrapper d-none d-md-block">
-      <img 
-      class="w-100"
-      src="./../../../assets/slider-1.jpg" alt="My image  description 2" />
-    
+      <img
+        class="w-100"
+        src="./../../../assets/slider-1.jpg"
+        alt="My image  description 2"
+      />
     </div>
   </ng-template>
 </ngb-carousel>
@@ -55,6 +58,39 @@
   <app-batches-home></app-batches-home>
 </section>
 <section>
-    <app-gallery></app-gallery>
+  <app-gallery></app-gallery>
 </section>
 
+<ng-template #noticeDialog id="noticeDialog" let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title">Notice Board</h3>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body" style="max-height:80vh; overflow-y:scroll;">
+    <ng-container *ngFor="let notice of notices; let i = index">
+      <div class="notice-card">
+        <h4 class="heading">{{notice.title}}</h4>
+        <div [innerHTML]="notice.description"></div> 
+        <hr *ngIf="i !== notices.length -1">
+      </div>
+      
+    </ng-container>
+    
+  </div>
+  <!-- <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Add</button>
+    <button type="submit" class="btn btn-primary">Modify</button>
+    <button
+      type="button"
+      class="btn btn-light"
+      (click)="modal.close('Close click')"
+    >
+      Close
+    </button>
+  </div> -->
+</ng-template>

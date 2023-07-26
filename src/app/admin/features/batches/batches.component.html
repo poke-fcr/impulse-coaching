@@ -29,7 +29,7 @@
    
   </ng-container>
   <ng-container *ngIf="batchStatus === 'error'">
-    Unable to load batches. Kindly call the developer.
+    <span class="text-danger">Unable to load batches. Kindly contact developer.</span>
   </ng-container>
   <ng-container *ngIf="batchStatus === 'done'">
   <div class="row g-2">
@@ -137,6 +137,7 @@
   </div>
   <div class="modal-footer">
     <button
+    *ngIf="!editMode"
       [disabled]="!batchForm.valid"
       type="submit"
       class="btn btn-primary"

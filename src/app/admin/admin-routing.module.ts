@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BatchesComponent } from './features/batches/batches.component';
+import { NoticesComponent } from './features/notices/notices.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
@@ -24,6 +25,11 @@ const routes: Routes = [
     path: 'batches',
     pathMatch: 'full',
     component: BatchesComponent,
+  },
+  {
+    path: 'notices',
+    pathMatch: 'full',
+    component: NoticesComponent,
   },
 ];
 

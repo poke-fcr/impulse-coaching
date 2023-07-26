@@ -6,18 +6,22 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BatchesComponent } from './features/batches/batches.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NoticesComponent } from './features/notices/notices.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
     DashboardComponent,
-    BatchesComponent
+    BatchesComponent,
+    NoticesComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CKEditorModule
   ]
 })
 export class AdminModule { }
