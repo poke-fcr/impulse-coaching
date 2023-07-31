@@ -1,6 +1,7 @@
 <h2 class="heading m-2">Welcome Admin.</h2>
 <div class="p-2">
   <h3 class="heading">Features</h3>
+  <h6 class="heading">Manage features and keep data up-to date. Review your data after update to be sure.</h6>
   <div class="row g-2">
     <div class="col-md-4" (click)="router.navigate(['admin', 'batches'])">
       <div class="p-3 features-sub-card shadow text-center">
@@ -14,16 +15,22 @@
         <div>Notice and Alert</div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" (click)="comingSoon()">
       <div class="p-3 features-sub-card shadow text-center">
         <div class="display-6"><i class="bi bi-images"></i></div>
         <div>Gallery</div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" (click)="comingSoon()">
       <div class="p-3 features-sub-card shadow text-center">
         <div class="display-6"><i class="bi bi-person-vcard"></i></div>
         <div>Contact Info</div>
+      </div>
+    </div>
+    <div class="col-md-4" (click)="router.navigate(['admin', 'downloads'])">
+      <div class="p-3 features-sub-card shadow text-center">
+        <div class="display-6"><i class="bi bi-cloud-arrow-up-fill"></i></div>
+        <div>Downloads</div>
       </div>
     </div>
   </div>

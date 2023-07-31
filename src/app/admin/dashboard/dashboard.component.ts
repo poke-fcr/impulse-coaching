@@ -8,4 +8,8 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent {
   constructor(public router: Router){}
+
+  comingSoon(){
+    alert('feature currently under development')
+  }
 }

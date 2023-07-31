@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppService } from 'src/app/app-service.service';
+import { NoticesService } from 'src/app/services/firestore/notices.service';
+
 
 @Component({
   selector: 'app-notices',
@@ -12,7 +13,7 @@ import { AppService } from 'src/app/app-service.service';
 export class NoticesComponent implements OnInit {
 
   constructor(
-    private appSvc: AppService,
+    private noticeSvc: NoticesService,
     private ngbModal: NgbModal,
     private fb: FormBuilder
   ) {}
@@ -28,7 +29,7 @@ export class NoticesComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.getBatches()
+    this.getNotices()
   }
 
   openFormModal(dialogRef: any) {
@@ -55,17 +56,17 @@ export class NoticesComponent implements OnInit {
      noticeId: new Date().getTime(),
      ...this.noticeForm.value
     }
-    this.appSvc.saveNotice(reqBody).subscribe({next:(_r)=>{
-      this.appSvc.appFirstTimeLoad = true
+    this.noticeSvc.createNotice(reqBody).then((_r)=>{
+      this.noticeSvc.noticeLoaded = false
       this.ngbModal.dismissAll()
-      this.getBatches()
-    }})
+      this.getNotices()
+  })
   }
 
-  getBatches(){
+  getNotices(){
     this.notices = []
     this.noticeStatus = 'fetching'
-    this.appSvc.getNotices().subscribe({next: (notices:any)=>{
+    this.noticeSvc.getNotices().subscribe({next: (notices:any)=>{
       this.notices = notices
       this.noticeStatus = 'done'
     },error: (_err: any)=> {
@@ -76,10 +77,11 @@ export class NoticesComponent implements OnInit {
   deleteNotice(noticeId: string){
     console.log(noticeId)
     this.noticeStatus = 'fetching'
-    this.appSvc.deleteNotice(noticeId).subscribe({next: (_resp)=>{
-      this.getBatches()
-    }, error: (_e)=>{
+    this.noticeSvc.deletenotice(noticeId).then((_resp)=>{
+      this.getNotices()
+      alert('Notice deleted!')
+    }).catch(()=>{
       this.noticeStatus = 'error'
-    }})
+    })
   }
 }

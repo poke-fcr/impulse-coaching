@@ -43,8 +43,14 @@
           <ng-container *ngFor="let wd of batch?.weekDay">
             <tr>
               <td scope="row">{{ wd.day | titlecase }}</td>
-              <td>{{ wd?.startTime || "Holiday" }}</td>
-              <td>{{ wd?.endTime || "Holiday" }}</td>
+              <ng-container *ngIf="wd?.isHoliday">
+                <td>{{ "Holiday" }}</td>
+                <td>{{ "Holiday" }}</td>
+              </ng-container>
+              <ng-container *ngIf="!wd?.isHoliday">
+                <td>{{ wd?.startTime || "Holiday" }}</td>
+                <td>{{ wd?.endTime || "Holiday" }}</td>
+              </ng-container>
             </tr>
           </ng-container>
         </table>

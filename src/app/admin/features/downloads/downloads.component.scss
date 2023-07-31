@@ -1,0 +1,21 @@
+.directory-row{
+    display: flex;
+    justify-content: space-between;
+}
+
+.heading {
+    color: var(--text-color-secondary);
+    font-weight: 600;
+  }
+
+  .dir-heading {
+    color: var(--text-color-secondary);
+    font-weight: 500;
+  }
+
+.directory-cards{
+    // background-color: var(--highlight-color);
+    color: var(--highlight-color);;
+    height: 112px;
+    cursor: pointer;
+}

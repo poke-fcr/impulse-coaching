@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { map } from 'rxjs';
-import { FileUploadService } from 'src/app/file-upload.service';
-import { FileUpload } from 'src/app/FileUpload';
+import { FileUploadService } from 'src/app/services/file-upload.service';
+import { FileUpload } from 'src/app/model/FileUpload';
 
 @Component({
   selector: 'app-gallery-home',

@@ -7,7 +7,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { FileUpload } from './FileUpload';
+import { FileUpload } from '../model/FileUpload';
 // import { FileUpload } from '../models/file-upload.model';
 
 @Injectable({
@@ -51,8 +51,10 @@ export class FileUploadService {
   }
 
   getFiles(numberItems: number): AngularFireList<FileUpload> {
-    console.log('rh 2')
+    // console.log('rh 2', this.db.database.)
+    console.log(this.db)
     return this.db.list(this.basePath, (ref) => ref.limitToLast(numberItems));
+    
   }
 
   deleteFile(fileUpload: FileUpload): void {

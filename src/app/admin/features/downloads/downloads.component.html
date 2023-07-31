@@ -1,0 +1,97 @@
+<div class="mt-3">
+  <div class="directory-row mb-2">
+    <h3 class="heading">Manage Downloads</h3>
+    <button
+      [disabled]="directoryFetchStatus !== 'done'"
+      class="btn btn-primary"
+      (click)="openFormModal(newFolderDialog)"
+    >
+      <i class="bi bi-folder-plus"></i>
+      New Folder
+    </button>
+  </div>
+  <div class="row">
+    <ng-container *ngIf="directories.length && directoryFetchStatus === 'done'">
+      <ng-container *ngIf="!directories.length">
+        <h3 class="heading text-info">
+          Get started by creating a new directory!
+        </h3>
+      </ng-container>
+      <div
+        *ngFor="let d of directories"
+        class="text-info col-sm-1 col-md-6 col-lg-2"
+        data-bs-toggle="tooltip" data-bs-placement="top" [title]="'created on ' + (d.directoryId | date)"
+        >
+      <div class="p-2 text-center directory-cards">
+        <i class="display-1 bi bi-folder"></i>
+        <h5 class="dir-heading">{{ d.directoryName || "Directory Name" }}</h5>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="directoryFetchStatus === 'error'">
+      <h3 class="heading text-warn">
+        Whoops! We ran in some error! Try again later.
+      </h3>
+    </ng-container>
+
+    <ng-container *ngIf="directoryFetchStatus === 'fetching'">
+      <div class="my-5 text-center">
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #newFolderDialog let-newFolderDialog>
+  <div class="modal-header">
+    <h4 class="modal-title">New Folder</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="newFolderDialog.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <input
+      class="form-control"
+      type="text"
+      required
+      [(ngModel)]="folderName"
+      placeholder="Enter folder name. Ex: Study Material"
+    />
+    <!-- app.component.html -->
+  </div>
+  <div class="modal-footer">
+    <button
+      [disabled]="!folderName.length || directoryFetchStatus !== 'done'"
+      type="submit"
+      class="btn btn-primary"
+      (click)="addDirectory()"
+    >
+      Add
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-light"
+      (click)="newFolderDialog.close('Close click')"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>

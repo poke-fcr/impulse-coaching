@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService } from 'src/app/app-service.service';
+import { BatchesService } from 'src/app/services/firestore/batches.service';
 
 @Component({
   selector: 'app-batches-home',
@@ -7,7 +7,7 @@ import { AppService } from 'src/app/app-service.service';
   styleUrls: ['./batches-home.component.scss'],
 })
 export class BatchesHomeComponent implements OnInit {
-  constructor(private appSvc: AppService) {}
+  constructor(private batchSvc: BatchesService) {}
   batches: any[] = [];
   batchStatus: 'fetching' | 'done' | 'error' = 'fetching';
 
@@ -18,7 +18,7 @@ export class BatchesHomeComponent implements OnInit {
   fetchBatches() {
     this.batchStatus = 'fetching';
     this.batches = [];
-    this.appSvc.getBatches().subscribe({
+    this.batchSvc.getBatches().subscribe({
       next: (data: any) => {
         if (typeof data === 'object') {
           this.batches = data;
