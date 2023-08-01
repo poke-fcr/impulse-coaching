@@ -6,6 +6,8 @@ import { HomeComponent } from './components/home/home.component';
 import { CreditsComponent } from './components/credits/credits.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { GalleryHomeComponent } from './components/gallery-home/gallery-home.component';
+import { DownloadsHomeComponent } from './components/downloads-home/downloads-home.component';
+import { DownloadsFileComponent } from './components/downloads-file/downloads-file.component';
 
 const routes: Routes = [
   {
@@ -36,6 +38,21 @@ const routes: Routes = [
     path: 'gallery',
     pathMatch: 'full',
     component: GalleryHomeComponent,
+  },
+  {
+    path: 'downloads',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: DownloadsHomeComponent,
+      },
+      {
+        path: ':folderName/:dirId',
+        pathMatch: 'full',
+        component: DownloadsFileComponent,
+      },
+    ]
   },
   {
     path: '**',

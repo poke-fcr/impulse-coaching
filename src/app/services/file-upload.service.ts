@@ -22,22 +22,28 @@ export class FileUploadService {
     private storage: AngularFireStorage
   ) {}
 
-  pushFileToStorage(fileUpload: FileUpload | any): Observable<number | undefined> {
-    const filePath = `${this.basePath}/${fileUpload.file.name}`;
+  pushFileToStorage(basePath: string, fileUpload: FileUpload | any, metaData: any): Observable<number | undefined> {
+    const filePath = `${basePath}/${fileUpload.file.name}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, fileUpload.file);
-
+    console.log(fileUpload)
     uploadTask
       .snapshotChanges()
       .pipe(
         finalize(() => {
           storageRef.getDownloadURL().subscribe((downloadURL) => {
             fileUpload.url = downloadURL;
-            fileUpload.name = fileUpload.file.name;
+            fileUpload.name = metaData.fileName
+            fileUpload.fileType = metaData.fileType
+            fileUpload.previewAvailable = metaData.previewAvailable
+            fileUpload.downloadAvailable = metaData.downloadAvailable
+
+
+            fileUpload.createdOn = new Date().getTime()
            //edit file upload!
  // fileUpload['title'] = 'Test title',
             // fileUpload.description = 'Test description'
-            this.saveFileData(fileUpload);
+            this.saveFileData(basePath, fileUpload);
           });
         })
       )
@@ -46,32 +52,37 @@ export class FileUploadService {
     return uploadTask.percentageChanges();
   }
 
-  private saveFileData(fileUpload: FileUpload): void {
-   let x = this.db.list(this.basePath).push(fileUpload);
+  private saveFileData(basePath: string, fileUpload: FileUpload): void {
+   this.db.list(basePath).push(fileUpload);
   }
 
-  getFiles(numberItems: number): AngularFireList<FileUpload> {
+  getFiles(basePath: string): AngularFireList<FileUpload> {
     // console.log('rh 2', this.db.database.)
-    console.log(this.db)
-    return this.db.list(this.basePath, (ref) => ref.limitToLast(numberItems));
+    console.log(this.db.list(basePath))
+    return this.db.list(basePath);
     
   }
 
-  deleteFile(fileUpload: FileUpload): void {
-    this.deleteFileDatabase(fileUpload.key)
+  deleteFile(basePath: string, fileUpload: FileUpload) {
+    return  this.deleteFileDatabase(basePath, fileUpload.key)
       .then(() => {
-        this.deleteFileStorage(fileUpload.name);
+        this.deleteFileStorage(basePath, fileUpload.name);
       })
       .catch((error) => console.log(error));
   }
 
-  private deleteFileDatabase(key: string): Promise<void> {
-    return this.db.list(this.basePath).remove(key);
-
+  private deleteFileDatabase(basePath: string, key: string): Promise<void> {
+    return this.db.list(basePath).remove(key);
   }
 
-  private deleteFileStorage(name: string): void {
-    const storageRef = this.storage.ref(this.basePath);
-    storageRef.child(name).delete();
+  deleteFolder(basePath: string){
+    console.log('rh1')
+    const storageRef = this.storage.ref(basePath);
+    return storageRef.delete()
+  }
+
+  private deleteFileStorage(basePath: string, name: string): void {
+    const storageRef = this.storage.ref(basePath);
+     storageRef.child(name).delete();
   }
 }

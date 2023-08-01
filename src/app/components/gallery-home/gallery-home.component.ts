@@ -19,7 +19,7 @@ export class GalleryHomeComponent {
   constructor(private uploadService: FileUploadService) { }
 
   ngOnInit(): void {
-    this.uploadService.getFiles(6).snapshotChanges().pipe(
+    this.uploadService.getFiles('gallery-home').snapshotChanges().pipe(
       map(changes =>
         // store the key
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
@@ -43,7 +43,7 @@ export class GalleryHomeComponent {
 
       if (file) {
         this.currentFileUpload = new FileUpload(file);
-        this.uploadService.pushFileToStorage(this.currentFileUpload).subscribe(
+        this.uploadService.pushFileToStorage('gallery-home',this.currentFileUpload, file.name).subscribe(
           percentage => {
             this.percentage = Math.round(percentage ? percentage : 0);
           },

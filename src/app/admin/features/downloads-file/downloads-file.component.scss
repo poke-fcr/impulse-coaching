@@ -1,0 +1,13 @@
+.file-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.heading {
+  color: var(--text-color-secondary);
+  font-weight: 600;
+}
+
+.file-cards {
+  cursor: pointer;
+}

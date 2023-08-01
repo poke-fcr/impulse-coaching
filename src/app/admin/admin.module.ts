@@ -11,6 +11,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { DownloadsComponent } from './features/downloads/downloads.component';
 import { FileUploadService } from '../services/file-upload.service';
 import { FormsModule } from '@angular/forms';
+import { DownloadsFileComponent } from './features/downloads-file/downloads-file.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FormsModule } from '@angular/forms';
     BatchesComponent,
     NoticesComponent,
     DownloadsComponent,
+    DownloadsFileComponent,
   ],
   imports: [
     CommonModule,

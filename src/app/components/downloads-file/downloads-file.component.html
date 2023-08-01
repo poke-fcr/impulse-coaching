@@ -1,0 +1,51 @@
+<div class="m-3">
+    <div class="file-row mb-2">
+      <h3 class="heading">Files - {{ title }}</h3>
+      <small class="text-info">Click to download a file.</small>
+    </div>
+    <div class="row">
+      <ng-container *ngIf="fetchStatus === 'error'">
+        <h3 class="heading text-warn">
+          Whoops! We ran in some error! Try again later.
+        </h3>
+      </ng-container>
+      <ng-container *ngIf="fetchStatus === 'fetching'">
+        <div class="my-5 text-center">
+          <div class="spinner-grow m-1 text-primary" role="status">
+            <span class="sr-only"></span>
+          </div>
+          <div class="spinner-grow m-1 text-primary" role="status">
+            <span class="sr-only"></span>
+          </div>
+          <div class="spinner-grow m-1 text-primary" role="status">
+            <span class="sr-only"></span>
+          </div>
+          <div class="spinner-grow m-1 text-primary" role="status">
+            <span class="sr-only"></span>
+          </div>
+          <div class="spinner-grow m-1 text-primary" role="status">
+            <span class="sr-only"></span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="fetchStatus === 'done'"> 
+          <div class="text-center m-5 row" *ngIf="!files.length"> 
+          <h4 class="heading">Its so empty here. Lets wait for some amazing study material.</h4>
+          </div>
+          <ng-container *ngIf="files.length"> 
+              <div
+              *ngFor="let d of files"
+              class="text-info col-sm-3 col-md-3 col-lg-2"
+              [title]="'Click to download. Created on ' + (d?.createdOn ? (d?.createdOn | date) : 'NA')"
+              >
+            <div (click)="downloadFile(d)"  class="text-center file-cards">
+              <i class="display-1 bi bi-file-earmark-text"></i>
+              <h5 class="dir-heading">{{ d.name || "File Name" }}</h5>
+              </div>
+            </div>
+              </ng-container>
+  
+      </ng-container>
+    </div>
+  </div>
+  

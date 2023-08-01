@@ -24,6 +24,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { BatchesService } from './services/firestore/batches.service';
 import { NoticesService } from './services/firestore/notices.service';
+import { DownloadsHomeComponent } from './components/downloads-home/downloads-home.component';
+import { DownloadsFileComponent } from './components/downloads-file/downloads-file.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { NoticesService } from './services/firestore/notices.service';
     CreditsComponent,
     GalleryComponent,
     BatchesHomeComponent,
-    GalleryHomeComponent
+    GalleryHomeComponent,
+    DownloadsHomeComponent,
+    DownloadsFileComponent
   ],
   imports: [
     BrowserModule,

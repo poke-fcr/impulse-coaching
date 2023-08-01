@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FileUploadService } from 'src/app/services/file-upload.service';
 import { DirectoriesService } from 'src/app/services/firestore/directories.service';
 
 @Component({
@@ -9,19 +8,15 @@ import { DirectoriesService } from 'src/app/services/firestore/directories.servi
   styleUrls: ['./downloads.component.scss'],
 })
 export class DownloadsComponent implements OnInit {
-  constructor(
-    private ngbModal: NgbModal,
-    private dirSvc: DirectoriesService
-  ) {}
+  constructor(private ngbModal: NgbModal, private dirSvc: DirectoriesService) {}
   directoryFetchStatus: 'fetching' | 'done' | 'error' = 'fetching';
   folderName: string = '';
   directories: any[] = [];
   ngOnInit() {
-    this.getAllDirectories()
+    this.getAllDirectories();
   }
 
   addDirectory() {
-    alert(this.folderName);
     this.directoryFetchStatus = 'fetching';
     this.dirSvc
       .createdirectory({
@@ -41,7 +36,7 @@ export class DownloadsComponent implements OnInit {
     this.dirSvc.getdirectories().subscribe({
       next: (dir: any) => {
         this.directories = dir;
-        this.directoryFetchStatus = 'done'
+        this.directoryFetchStatus = 'done';
       },
       error: (_e) => {
         this.directoryFetchStatus = 'error';
@@ -67,5 +62,17 @@ export class DownloadsComponent implements OnInit {
         this.folderName = '';
       },
     });
+  }
+
+  deleteFolder(id: any) {
+    this.directoryFetchStatus = 'fetching';
+    this.dirSvc
+      .deletedirectory(id)
+      .then(() => {
+        this.getAllDirectories();
+      })
+      .catch(() => {
+        this.directoryFetchStatus = 'error';
+      });
   }
 }

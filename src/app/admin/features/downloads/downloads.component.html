@@ -1,6 +1,9 @@
-<div class="mt-3">
+<div class="m-3">
   <div class="directory-row mb-2">
-    <h3 class="heading">Manage Downloads</h3>
+    <div>
+      <h3 class="heading">Manage Downloads</h3>
+     
+    </div>
     <button
       [disabled]="directoryFetchStatus !== 'done'"
       class="btn btn-primary"
@@ -10,21 +13,38 @@
       New Folder
     </button>
   </div>
-  <div class="row">
-    <ng-container *ngIf="directories.length && directoryFetchStatus === 'done'">
+  <small class="text-info"
+  >You can have one parent folder and multiple files inside it. Nested
+  folders are not supported.</small
+>
+  <div class="row mt-2">
+    <ng-container *ngIf="directoryFetchStatus === 'done'">
       <ng-container *ngIf="!directories.length">
-        <h3 class="heading text-info">
-          Get started by creating a new directory!
+        <h3 class="heading text-info text-center my-5">
+          It feels so empty here. Lets get started by creating a new directory!
         </h3>
       </ng-container>
       <div
+        [routerLink]="
+          '/admin/downloads/' + d.directoryName + '/' + d.directoryId
+        "
         *ngFor="let d of directories"
         class="text-info col-sm-1 col-md-6 col-lg-2"
-        data-bs-toggle="tooltip" data-bs-placement="top" [title]="'created on ' + (d.directoryId | date)"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        [title]="'created on ' + (d.directoryId | date)"
+      >
+        <div
+          class="text-end text-danger"
+          (click)="deleteFolder(d.directoryId)"
+          title="Delete this folder"
+          style="cursor: pointer"
         >
-      <div class="p-2 text-center directory-cards">
-        <i class="display-1 bi bi-folder"></i>
-        <h5 class="dir-heading">{{ d.directoryName || "Directory Name" }}</h5>
+          <i class="bi bi-trash3 pr-3"></i>
+        </div>
+        <div class="text-center directory-cards">
+          <i class="display-1 bi bi-folder"></i>
+          <h5 class="dir-heading">{{ d.directoryName || "Directory Name" }}</h5>
         </div>
       </div>
     </ng-container>

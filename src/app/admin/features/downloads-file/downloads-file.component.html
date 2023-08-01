@@ -1,0 +1,136 @@
+<div class="m-3">
+  <div class="file-row mb-2">
+    <h3 class="heading">Manage Files - {{ title }}</h3>
+    <button [disabled]="fetchStatus !== 'done'" class="btn btn-primary"
+    (click)="openNewFileDialog(newFileDialog)"
+    >
+      <i class="bi bi-file-earmark-arrow-up"></i>
+      New File
+    </button>
+  </div>
+  <div class="row">
+    <ng-container *ngIf="fetchStatus === 'error'">
+      <h3 class="heading text-warn">
+        Whoops! We ran in some error! Try again later.
+      </h3>
+    </ng-container>
+    <ng-container *ngIf="fetchStatus === 'fetching'">
+      <div class="my-5 text-center">
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="fetchStatus === 'done'"> 
+        <div class="text-center m-5 row" *ngIf="!files.length"> 
+        <h4 class="heading">Its so empty here. Get started by adding your first file here.</h4>
+        </div>
+        <ng-container *ngIf="files.length"> 
+            <div
+            *ngFor="let d of files"
+            class="text-info col-sm-3 col-md-3 col-lg-2"
+            [title]="'Click to download. Created on ' + (d?.createdOn ? (d?.createdOn | date) : 'NA')"
+            >
+            <div class="text-end text-danger"
+            (click)="deleteFile(d)"
+            title="Delete this folder" style="cursor: pointer;">
+                <i class="bi bi-trash3"></i>
+            </div>
+          <div (click)="downloadFile(d)"  class="text-center file-cards">
+            <i class="display-1 bi bi-file-earmark-text"></i>
+            <h5 class="dir-heading">{{ d.name || "File Name" }}</h5>
+            </div>
+          </div>
+            </ng-container>
+
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #newFileDialog let-newFileDialog>
+    <div class="modal-header">
+      <h4 class="modal-title">Upload New File </h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="newFileDialog.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <input
+        class="form-control"
+        type="text"
+        [(ngModel)]="fileName"
+        required
+        placeholder="Enter a unique file name"
+      />
+      <!-- <span class="text-small">Note: File name should be unique</span> -->
+      <input
+      #file
+      (change)="selectFile($event)"
+      class="form-control my-2"
+      type="file"
+      required
+    />
+    <div class="form-check">
+      <input 
+      [(ngModel)]="previewAvailable"
+      type="checkbox" class="form-check-input" id="previewFile">
+      <label class="form-check-label" for="previewFile">Preview file (User will be able to view file in app without downloading. Provided player supports the given file.)</label>
+    </div>
+    <div class="form-check">
+      <input
+        [(ngModel)]="downloadAvailable"
+      type="checkbox" class="form-check-input" id="previewDownload">
+      <label class="form-check-label" for="previewDownload">Downloadable file (User will be able to download this media)</label>
+    </div>
+    <small class="text-info">Select either of the above checkbox.</small>
+    <div *ngIf="currentFileUpload" class="progress mt-2">
+      <div
+        class="progress-bar progress-bar-info"
+        role="progressbar"
+        attr.aria-valuenow="{{ percentage }}"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [ngStyle]="{ width: percentage + '%' }"
+      >
+        {{ percentage }}%
+      </div>
+    </div>
+    
+      <!-- app.component.html -->
+    </div>
+    <div class="modal-footer">
+      <button
+        [disabled]="!fileName.length || !selectedFiles || fetchStatus !=='done' || !(downloadAvailable || previewAvailable)"
+        type="submit"
+        class="btn btn-primary"
+        (click)="uploadFile()"
+      >
+        Upload
+      </button>
+  
+      <button
+        type="button"
+        class="btn btn-light"
+        (click)="newFileDialog.close('Close click')"
+      >
+        Close
+      </button>
+      
+    </div>
+   
+  </ng-template>
