@@ -175,4 +175,8 @@ export class DownloadsFileComponent implements OnInit {
     // link.click();
     // link.remove();
   }
+
+  previewFile(d: any){
+
+  }
 }

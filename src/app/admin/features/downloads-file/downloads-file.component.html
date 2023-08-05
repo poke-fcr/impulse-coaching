@@ -1,8 +1,10 @@
 <div class="m-3">
   <div class="file-row mb-2">
     <h3 class="heading">Manage Files - {{ title }}</h3>
-    <button [disabled]="fetchStatus !== 'done'" class="btn btn-primary"
-    (click)="openNewFileDialog(newFileDialog)"
+    <button
+      [disabled]="fetchStatus !== 'done'"
+      class="btn btn-primary"
+      (click)="openNewFileDialog(newFileDialog)"
     >
       <i class="bi bi-file-earmark-arrow-up"></i>
       New File
@@ -33,17 +35,68 @@
         </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="fetchStatus === 'done'"> 
-        <div class="text-center m-5 row" *ngIf="!files.length"> 
-        <h4 class="heading">Its so empty here. Get started by adding your first file here.</h4>
-        </div>
-        <ng-container *ngIf="files.length"> 
-            <div
-            *ngFor="let d of files"
-            class="text-info col-sm-3 col-md-3 col-lg-2"
-            [title]="'Click to download. Created on ' + (d?.createdOn ? (d?.createdOn | date) : 'NA')"
+    <ng-container *ngIf="fetchStatus === 'done'">
+      <div class="text-center m-5 row" *ngIf="!files.length">
+        <h4 class="heading">
+          Its so empty here. Get started by adding your first file here.
+        </h4>
+      </div>
+      <ng-container *ngIf="files.length">
+        <div
+          style="background-color: #f9f1f0"
+          *ngFor="let d of files"
+          class="shadow card m-1 rounded col-sm-1 col-md-4 col-lg-4"
+          [title]="
+            'Created on ' + (d?.createdOn ? (d?.createdOn | date) : 'NA')
+          "
+        >
+          <div class="file-cards">
+            <div>
+              <container_element [ngSwitch]="d.fileType">
+                <i
+                  *ngSwitchCase="'application/pdf'"
+                  class="display-1 bi bi-filetype-pdf"
+                ></i>
+                <i
+                  *ngSwitchDefault
+                  class="display-1 bi bi-file-earmark-text"
+                ></i>
+              </container_element>
+            </div>
+            <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+            <div class="card-body">
+              <h5 class="card-title">
+                {{ d.name || "File name not available" }}
+              </h5>
+              <!-- <span class="card-text">File Type:</span> -->
+
+              {{
+                d.fileType || "file type not available, preview may not work."
+              }}
+            </div>
+          </div>
+
+          <!-- {{d | json}} -->
+          <div class="file-action-btns my-3">
+            <button class="btn btn-danger" (click)="deleteFile(d)">
+              <i class="bi bi-trash3"></i>&nbsp;Delete
+            </button>
+            <button
+              [disabled]="!d.previewAvailable"
+              class="btn btn-primary"
+              (click)="previewFile(d)"
             >
-            <div class="text-end text-danger"
+              <i class="bi bi-collection-play"></i>&nbsp;Preview
+            </button>
+            <button
+              class="mx-2 btn btn-success"
+              [disabled]="!d.downloadAvailable"
+              (click)="downloadFile(d)"
+            >
+              <i class="bi bi-download"></i>&nbsp;Download
+            </button>
+          </div>
+          <!-- <div class="text-end text-danger"
             (click)="deleteFile(d)"
             title="Delete this folder" style="cursor: pointer;">
                 <i class="bi bi-trash3"></i>
@@ -51,34 +104,33 @@
           <div (click)="downloadFile(d)"  class="text-center file-cards">
             <i class="display-1 bi bi-file-earmark-text"></i>
             <h5 class="dir-heading">{{ d.name || "File Name" }}</h5>
-            </div>
-          </div>
-            </ng-container>
-
+            </div> -->
+        </div>
+      </ng-container>
     </ng-container>
   </div>
 </div>
 
 <ng-template #newFileDialog let-newFileDialog>
-    <div class="modal-header">
-      <h4 class="modal-title">Upload New File </h4>
-      <button
-        type="button"
-        class="btn-close"
-        aria-label="Close"
-        (click)="newFileDialog.dismiss('Cross click')"
-      ></button>
-    </div>
-    <div class="modal-body">
-      <input
-        class="form-control"
-        type="text"
-        [(ngModel)]="fileName"
-        required
-        placeholder="Enter a unique file name"
-      />
-      <!-- <span class="text-small">Note: File name should be unique</span> -->
-      <input
+  <div class="modal-header">
+    <h4 class="modal-title">Upload New File</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="newFileDialog.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <input
+      class="form-control"
+      type="text"
+      [(ngModel)]="fileName"
+      required
+      placeholder="Enter a unique file name"
+    />
+    <!-- <span class="text-small">Note: File name should be unique</span> -->
+    <input
       #file
       (change)="selectFile($event)"
       class="form-control my-2"
@@ -86,16 +138,27 @@
       required
     />
     <div class="form-check">
-      <input 
-      [(ngModel)]="previewAvailable"
-      type="checkbox" class="form-check-input" id="previewFile">
-      <label class="form-check-label" for="previewFile">Preview file (User will be able to view file in app without downloading. Provided player supports the given file.)</label>
+      <input
+        [(ngModel)]="previewAvailable"
+        type="checkbox"
+        class="form-check-input"
+        id="previewFile"
+      />
+      <label class="form-check-label" for="previewFile"
+        >Preview file (User will be able to view file in app without
+        downloading. Provided player supports the given file.)</label
+      >
     </div>
     <div class="form-check">
       <input
         [(ngModel)]="downloadAvailable"
-      type="checkbox" class="form-check-input" id="previewDownload">
-      <label class="form-check-label" for="previewDownload">Downloadable file (User will be able to download this media)</label>
+        type="checkbox"
+        class="form-check-input"
+        id="previewDownload"
+      />
+      <label class="form-check-label" for="previewDownload"
+        >Downloadable file (User will be able to download this media)</label
+      >
     </div>
     <small class="text-info">Select either of the above checkbox.</small>
     <div *ngIf="currentFileUpload" class="progress mt-2">
@@ -110,27 +173,30 @@
         {{ percentage }}%
       </div>
     </div>
-    
-      <!-- app.component.html -->
-    </div>
-    <div class="modal-footer">
-      <button
-        [disabled]="!fileName.length || !selectedFiles || fetchStatus !=='done' || !(downloadAvailable || previewAvailable)"
-        type="submit"
-        class="btn btn-primary"
-        (click)="uploadFile()"
-      >
-        Upload
-      </button>
-  
-      <button
-        type="button"
-        class="btn btn-light"
-        (click)="newFileDialog.close('Close click')"
-      >
-        Close
-      </button>
-      
-    </div>
-   
-  </ng-template>
+
+    <!-- app.component.html -->
+  </div>
+  <div class="modal-footer">
+    <button
+      [disabled]="
+        !fileName.length ||
+        !selectedFiles ||
+        fetchStatus !== 'done' ||
+        !(downloadAvailable || previewAvailable)
+      "
+      type="submit"
+      class="btn btn-primary"
+      (click)="uploadFile()"
+    >
+      Upload
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-light"
+      (click)="newFileDialog.close('Close click')"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>

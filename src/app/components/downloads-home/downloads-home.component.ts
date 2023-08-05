@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FileUploadService } from 'src/app/services/file-upload.service';
 import { DirectoriesService } from 'src/app/services/firestore/directories.service';
 
 @Component({

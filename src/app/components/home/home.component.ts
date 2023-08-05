@@ -19,12 +19,13 @@ export class HomeComponent implements AfterViewInit {
   constructor(private ngbModal: NgbModal, private noticeSvc: NoticesService) {}
 
   ngAfterViewInit() {
+    console.log('reached here again??');
     if (!this.noticeSvc.noticeLoaded)
       this.noticeSvc.getNotices().subscribe({
         next: (notices: any) => {
-          this.noticeSvc.noticeLoaded = true;
           this.notices = notices;
-          if (this.notices.length) {
+          if (this.notices.length && !this.noticeSvc.noticeLoaded) {
+            this.noticeSvc.noticeLoaded = true;
             this.ngbModal.open(this.noticeDialog, {
               size: 'lg',
               centered: true,
