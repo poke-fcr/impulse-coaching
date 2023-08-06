@@ -54,7 +54,7 @@
             <div>
               <container_element [ngSwitch]="d.fileType">
                 <i
-                  *ngSwitchCase="'application/pdf'"
+                  *ngSwitchCase="'pdf'"
                   class="display-1 bi bi-filetype-pdf"
                 ></i>
                 <i
@@ -69,10 +69,20 @@
                 {{ d.name || "File name not available" }}
               </h5>
               <!-- <span class="card-text">File Type:</span> -->
+              <div>
+                <b>Mime Type </b>
 
-              {{
-                d.fileType || "file type not available, preview may not work."
-              }}
+                {{
+                  d.mimeType || "mime type not available, preview may not work."
+                }}
+              </div>
+              <div>
+                <b>File Type </b>
+                {{
+                  d.fileType || "mime type not available, preview may not work."
+                }}
+              </div>
+              
             </div>
           </div>
 
@@ -137,8 +147,17 @@
       type="file"
       required
     />
+    <div class="form-group mb-2">
+    <select class="form-control" (change)="fileTypeChange($event)">
+      <option value="none">Select file type</option>
+      <option value="pdf">Pdf file.</option>
+      <option value="video">Video</option>
+    </select>
+    <small class="text-info">This will help application to load proper player for preview.</small>
+  </div>
     <div class="form-check">
       <input
+        [disabled]="fileType==='none'"
         [(ngModel)]="previewAvailable"
         type="checkbox"
         class="form-check-input"
@@ -160,7 +179,7 @@
         >Downloadable file (User will be able to download this media)</label
       >
     </div>
-    <small class="text-info">Select either of the above checkbox.</small>
+    <small class="text-info">Select either or both above given checkbox.</small>
     <div *ngIf="currentFileUpload" class="progress mt-2">
       <div
         class="progress-bar progress-bar-info"
@@ -182,7 +201,7 @@
         !fileName.length ||
         !selectedFiles ||
         fetchStatus !== 'done' ||
-        !(downloadAvailable || previewAvailable)
+        !(downloadAvailable || (previewAvailable && fileType!=='none'))
       "
       type="submit"
       class="btn btn-primary"

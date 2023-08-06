@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs';
 import { FileUpload } from 'src/app/model/FileUpload';
 import { FileUploadService } from 'src/app/services/file-upload.service';
+import { PlayerService } from 'src/app/services/player/player.service';
 
 @Component({
   selector: 'app-downloads-file',
@@ -22,14 +23,17 @@ export class DownloadsFileComponent implements OnInit {
   percentage = 0;
 
   fileName: string = '';
-  fileType: string | undefined = '';
+
+  mimeType: string | undefined = '';
+  fileType: string = 'none'
   previewAvailable: boolean = false;
   downloadAvailable: boolean = false;
   constructor(
     private activateRoute: ActivatedRoute,
     private fileSvc: FileUploadService,
     private ngbModal: NgbModal,
-    private http: HttpClient
+    private router: Router,
+    private playerSvc: PlayerService
   ) {}
 
   ngOnInit() {
@@ -80,7 +84,7 @@ export class DownloadsFileComponent implements OnInit {
         this.fileName = '';
         this.selectedFiles = undefined;
         this.currentFileUpload = undefined;
-        this.fileType = '';
+        this.mimeType = '';
         this.previewAvailable = false;
         this.downloadAvailable = false;
         this.percentage = 0;
@@ -90,13 +94,13 @@ export class DownloadsFileComponent implements OnInit {
     modalRef.closed.subscribe({
       next: (_r: any) => {
         this.fileName = '';
-        this.fileType = '';
+        this.mimeType = '';
         this.previewAvailable = false;
         this.downloadAvailable = false;
         this.selectedFiles = undefined;
         this.currentFileUpload = undefined;
         this.percentage = 0;
-        
+
         // this.folderName = '';
       },
     });
@@ -110,12 +114,13 @@ export class DownloadsFileComponent implements OnInit {
     if (this.selectedFiles) {
       let file: File | null = this.selectedFiles.item(0);
       this.selectedFiles = undefined;
-      this.fileType = file?.type
+      this.mimeType = file?.type;
       if (file) {
         this.currentFileUpload = new FileUpload(file);
         this.fetchStatus = 'fetching';
         let metaData = {
           fileName: this.fileName,
+          mimeType: this.mimeType,
           fileType: this.fileType,
           previewAvailable: this.previewAvailable,
           downloadAvailable: this.downloadAvailable,
@@ -176,7 +181,12 @@ export class DownloadsFileComponent implements OnInit {
     // link.remove();
   }
 
-  previewFile(d: any){
+  previewFile(d: any) {
+    this.playerSvc.playerData = d
+    this.router.navigate(['player/video'])
+  }
 
+  fileTypeChange(e: any) {
+    this.fileType = e.target.value
   }
 }

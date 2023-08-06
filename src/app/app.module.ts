@@ -12,13 +12,13 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CreditsComponent } from './components/credits/credits.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { BatchesHomeComponent } from './components/batches-home/batches-home.component';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { AppService } from './app-service.service';
 import { GalleryHomeComponent } from './components/gallery-home/gallery-home.component';
-import { AngularFireModule } from '@angular/fire/compat'
-import { AngularFireStorageModule} from '@angular/fire/compat/storage'
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from 'src/environments/environment.development';
-import { AngularFireDatabaseModule} from '@angular/fire/compat/database'
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { FileUploadService } from './services/file-upload.service';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
@@ -26,6 +26,7 @@ import { BatchesService } from './services/firestore/batches.service';
 import { NoticesService } from './services/firestore/notices.service';
 import { DownloadsHomeComponent } from './components/downloads-home/downloads-home.component';
 import { DownloadsFileComponent } from './components/downloads-file/downloads-file.component';
+import { PlayerService } from './services/player/player.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { DownloadsFileComponent } from './components/downloads-file/downloads-fi
     BatchesHomeComponent,
     GalleryHomeComponent,
     DownloadsHomeComponent,
-    DownloadsFileComponent
+    DownloadsFileComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,9 +52,15 @@ import { DownloadsFileComponent } from './components/downloads-file/downloads-fi
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
   ],
-  providers: [AppService, FileUploadService, BatchesService, NoticesService],
-  bootstrap: [AppComponent]
+  providers: [
+    AppService,
+    FileUploadService,
+    BatchesService,
+    NoticesService,
+    PlayerService,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,0 +1,11 @@
+<ng-container *ngIf="fetchStatus === 'fetching'"> </ng-container>
+
+<ng-container *ngIf="fetchStatus === 'done'">
+  <div class="wrapper">
+    <div class="videocontent">
+      <video #target class="video-js vjs-default-skin vjs-16-9  vjs-big-play-centered" controls muted playsinline preload="none">
+        <!-- <source [src]="playerData.url"> -->
+      </video>
+    </div>
+  </div>
+</ng-container>

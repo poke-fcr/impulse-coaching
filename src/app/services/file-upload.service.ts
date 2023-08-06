@@ -37,6 +37,7 @@ export class FileUploadService {
             fileUpload.fileType = metaData.fileType
             fileUpload.previewAvailable = metaData.previewAvailable
             fileUpload.downloadAvailable = metaData.downloadAvailable
+            fileUpload.mimeType = metaData.mimeType
 
 
             fileUpload.createdOn = new Date().getTime()

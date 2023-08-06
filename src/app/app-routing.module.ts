@@ -55,6 +55,10 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'player',
+    loadChildren:()=> import('./player/player.module').then(v => v.PlayerModule)
+  },
+  {
     path: '**',
     redirectTo: '',
   },

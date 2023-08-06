@@ -5,6 +5,7 @@ export class FileUpload {
     file: File;
     createdOn!: number;
     fileType: string | undefined = '';
+    mimeType: string | undefined = '';
     previewAvailable: boolean = false;
     downloadAvailable: boolean = false;
   
