@@ -38,16 +38,16 @@ export class VideoComponent implements AfterViewInit, OnInit {
       //   autoplay: false,
       //   preload: 'auto'
       // });
-      let height = window.innerHeight
-      let width = window.innerWidth
-      let tempOptions = {}
-      //desktop mode
-      if(width > height)
-      {
+      // let height = window.innerHeight
+      // let width = window.innerWidth
+      // let tempOptions = {}
+      // //desktop mode
+      // if(width > height)
+      // {
       
-        height = height - 150
-        console.log('rh2', height)
-      }
+      //   height = height - 150
+      //   console.log('rh2', height)
+      // }
 
       this.options = {
         autoplay: true,
@@ -55,7 +55,7 @@ export class VideoComponent implements AfterViewInit, OnInit {
         sources: [
           {
             src: this.playerData.url,
-            type: 'video/mp4' || '',
+            type: this.playerData.mimeType,
           },
         ],
       };
@@ -65,6 +65,7 @@ export class VideoComponent implements AfterViewInit, OnInit {
       console.log(this.playerData);
     } else {
       this.fetchStatus = 'error';
+
       alert('something went wrong. Lets go home and start over!');
       this.router.navigate(['']);
     }

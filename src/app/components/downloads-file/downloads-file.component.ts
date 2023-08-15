@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { FileUploadService } from 'src/app/services/file-upload.service';
+import { PlayerService } from 'src/app/services/player/player.service';
 
 @Component({
   selector: 'app-downloads-file',
@@ -16,7 +17,9 @@ export class DownloadsFileComponent implements OnInit {
 
   constructor(
     private activateRoute: ActivatedRoute,
-    private fileSvc: FileUploadService
+    private fileSvc: FileUploadService,
+    private router: Router,
+    private playerSvc: PlayerService
   ) {}
 
   ngOnInit() {
@@ -59,4 +62,13 @@ export class DownloadsFileComponent implements OnInit {
   downloadFile(d: any) {
     window.open(d.url, '_blank');
   }
+
+  previewFile(d: any) {
+    this.playerSvc.playerData = d
+    if(d.fileType == 'video')
+    this.router.navigate(['player/video'])
+    else 
+    alert('Funcionality for pdf player under development')
+  }
+
 }

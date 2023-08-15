@@ -2,3 +2,25 @@
     color: var(--text-color-secondary);
     font-weight: 600;
 }
+
+.file-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+
+.file-cards {
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    // background-color: var(--highlight-color);
+    display: flex;
+    flex-direction: row;
+    border: none;
+  }
+  
+  .file-action-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    // margin: 8px;
+  }

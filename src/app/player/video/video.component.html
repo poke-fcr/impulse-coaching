@@ -1,11 +1,65 @@
-<ng-container *ngIf="fetchStatus === 'fetching'"> </ng-container>
-
-<ng-container *ngIf="fetchStatus === 'done'">
-  <div class="wrapper">
-    <div class="videocontent">
-      <video #target class="video-js vjs-default-skin vjs-16-9  vjs-big-play-centered" controls muted playsinline preload="none">
-        <!-- <source [src]="playerData.url"> -->
-      </video>
+<ng-container *ngIf="fetchStatus === 'fetching'">
+  <div class="my-5 text-center">
+    <div class="spinner-grow m-1 text-primary" role="status">
+      <span class="sr-only"></span>
+    </div>
+    <div class="spinner-grow m-1 text-primary" role="status">
+      <span class="sr-only"></span>
+    </div>
+    <div class="spinner-grow m-1 text-primary" role="status">
+      <span class="sr-only"></span>
+    </div>
+    <div class="spinner-grow m-1 text-primary" role="status">
+      <span class="sr-only"></span>
+    </div>
+    <div class="spinner-grow m-1 text-primary" role="status">
+      <span class="sr-only"></span>
     </div>
   </div>
+</ng-container>
+
+<ng-container *ngIf="fetchStatus === 'done'">
+  <div class="rounded shadow card">
+    <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-8 container-app ">
+      <div class="wrapper">
+        <div class="videocontent">
+          <video
+            #target
+            class="video-js vjs-default-skin vjs-16-9 vjs-big-play-centered"
+            controls
+            muted
+            playsinline
+            preload="none"
+          >
+            <!-- <source [src]="playerData.url"> -->
+          </video>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-4">
+      <div class="video-body my-3">
+        <h3>{{ playerData.name }}</h3>
+        <span><b>Created on </b>{{ playerData.createdOn | date }}</span
+        ><br />
+        <span><b>File type </b>{{ playerData.fileType }}</span>
+        <div  class="mt-5">
+            <small>
+                <ol>
+                    <li>Click on full screen mode for best view.</li>
+                    <li>If content media is not supported you can raise an query from footer section.</li>
+                    <li>You can always download the media from files and downloads.</li>
+                </ol>
+            </small>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="fetchStatus === 'error'">
+  <h3 class="heading text-warn">
+    Whoops! We ran in some error! Try again later.
+  </h3>
 </ng-container>
