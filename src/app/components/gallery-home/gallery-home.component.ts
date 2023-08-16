@@ -1,58 +1,70 @@
-import { Component } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { FileUploadService } from 'src/app/services/file-upload.service';
-import { FileUpload } from 'src/app/model/FileUpload';
+import { PlayerService } from 'src/app/services/player/player.service';
 
 @Component({
   selector: 'app-gallery-home',
   templateUrl: './gallery-home.component.html',
-  styleUrls: ['./gallery-home.component.scss']
+  styleUrls: ['./gallery-home.component.scss'],
 })
-export class GalleryHomeComponent {
-
-  selectedFiles?: FileList;
-  currentFileUpload?: FileUpload;
-  percentage = 0;
-  fileUploads: any[] =[]
-  constructor(private uploadService: FileUploadService) { }
-
-  ngOnInit(): void {
-    this.uploadService.getFiles('gallery-home').snapshotChanges().pipe(
-      map(changes =>
-        // store the key
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-      )
-    ).subscribe(fileUploads => {
-    
-        console.log('rh', fileUploads)
-      this.fileUploads = fileUploads;
-    });
-  }
+export class GalleryHomeComponent implements OnInit {
   
+  title: string = '';
+  id: string = '';
+  fetchStatus: 'fetching' | 'done' | 'error' = 'fetching';
+  files: any[] = [];
 
-  selectFile(event: any): void {
-    this.selectedFiles = event.target.files;
+  constructor(
+    private activateRoute: ActivatedRoute,
+    private fileSvc: FileUploadService,
+    private router: Router,
+    private playerSvc: PlayerService
+  ) {}
+
+  ngOnInit() {
+    this.title = 'Gallery';
+    this.id = 'gallery-home';
+    this.loadData();
   }
 
-  upload(): void {
-    if (this.selectedFiles) {
-      const file: File | null = this.selectedFiles.item(0);
-      this.selectedFiles = undefined;
-
-      if (file) {
-        this.currentFileUpload = new FileUpload(file);
-        this.uploadService.pushFileToStorage('gallery-home',this.currentFileUpload, file.name).subscribe(
-          percentage => {
-            this.percentage = Math.round(percentage ? percentage : 0);
-          },
-          error => {
-            console.log(error);
-          }
-        );
-      }
-    }
+  loadData() {
+    this.fileSvc
+      .getFiles(this.id)
+      .snapshotChanges()
+      .pipe(
+        map((changes: any[]) =>
+          // store the key
+          changes.map((c: { payload: { key: any; val: () => any } }) => ({
+            key: c.payload.key,
+            ...c.payload.val(),
+          }))
+        )
+      )
+      .subscribe(
+        (fileUploads) => {
+          console.log('rh', fileUploads);
+          this.files = fileUploads;
+          this.fetchStatus = 'done';
+        },
+        (_e) => {
+          this.fetchStatus = 'error';
+        }
+      );
   }
 
+  downloadFile(d: any) {
+    window.open(d.url, '_blank');
+  }
+
+  previewFile(d: any) {
+    this.playerSvc.playerData = d
+    if(d.fileType == 'video')
+    this.router.navigate(['player/video'])
+    else if(d.fileType == 'pdf')
+    this.router.navigate(['player/pdf'])
+    else 
+    alert('Funcionality for pdf player under development')
+  }
 }

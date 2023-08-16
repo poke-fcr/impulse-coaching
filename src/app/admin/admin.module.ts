@@ -12,6 +12,7 @@ import { DownloadsComponent } from './features/downloads/downloads.component';
 import { FileUploadService } from '../services/file-upload.service';
 import { FormsModule } from '@angular/forms';
 import { DownloadsFileComponent } from './features/downloads-file/downloads-file.component';
+import { GalleryAdminComponent } from './features/gallery-admin/gallery-admin.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { DownloadsFileComponent } from './features/downloads-file/downloads-file
     NoticesComponent,
     DownloadsComponent,
     DownloadsFileComponent,
+    GalleryAdminComponent,
   ],
   imports: [
     CommonModule,

@@ -52,7 +52,7 @@ import { PlayerService } from './services/player/player.service';
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
-    AngularFireDatabaseModule,
+    AngularFireDatabaseModule
   ],
   providers: [
     AppService,

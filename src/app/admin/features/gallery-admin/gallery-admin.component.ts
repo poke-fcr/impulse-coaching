@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs';
 import { FileUpload } from 'src/app/model/FileUpload';
@@ -8,11 +7,11 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 import { PlayerService } from 'src/app/services/player/player.service';
 
 @Component({
-  selector: 'app-downloads-file',
-  templateUrl: './downloads-file.component.html',
-  styleUrls: ['./downloads-file.component.scss'],
+  selector: 'app-gallery-admin',
+  templateUrl: './gallery-admin.component.html',
+  styleUrls: ['./gallery-admin.component.scss'],
 })
-export class DownloadsFileComponent implements OnInit {
+export class GalleryAdminComponent {
   title: string = '';
   id: string = '';
   fetchStatus: 'fetching' | 'done' | 'error' = 'fetching';
@@ -25,27 +24,13 @@ export class DownloadsFileComponent implements OnInit {
   fileName: string = '';
 
   mimeType: string | undefined = '';
-  fileType: string = 'none'
-  previewAvailable: boolean = false;
-  downloadAvailable: boolean = false;
-  constructor(
-    private activateRoute: ActivatedRoute,
-    private fileSvc: FileUploadService,
-    private ngbModal: NgbModal,
-    private router: Router,
-    private playerSvc: PlayerService
-  ) {}
+  fileType: string = 'image';
+  constructor(private fileSvc: FileUploadService, private ngbModal: NgbModal, private router: Router) {}
 
   ngOnInit() {
-    this.activateRoute.paramMap.subscribe({
-      next: (p: any) => {
-        if (p.get('folderName') && p.get('dirId')) {
-          this.title = p.get('folderName');
-          this.id = p.get('dirId');
-          this.loadData();
-        } else this.fetchStatus = 'error';
-      },
-    });
+    this.title = 'Gallery';
+    this.id = 'gallery-home';
+    this.loadData();
   }
 
   loadData() {
@@ -85,8 +70,6 @@ export class DownloadsFileComponent implements OnInit {
         this.selectedFiles = undefined;
         this.currentFileUpload = undefined;
         this.mimeType = '';
-        this.previewAvailable = false;
-        this.downloadAvailable = false;
         this.percentage = 0;
         console.log('dismissed');
       },
@@ -95,12 +78,9 @@ export class DownloadsFileComponent implements OnInit {
       next: (_r: any) => {
         this.fileName = '';
         this.mimeType = '';
-        this.previewAvailable = false;
-        this.downloadAvailable = false;
         this.selectedFiles = undefined;
         this.currentFileUpload = undefined;
         this.percentage = 0;
-
         // this.folderName = '';
       },
     });
@@ -122,8 +102,6 @@ export class DownloadsFileComponent implements OnInit {
           fileName: this.fileName,
           mimeType: this.mimeType,
           fileType: this.fileType,
-          previewAvailable: this.previewAvailable,
-          downloadAvailable: this.downloadAvailable,
         };
         this.fileSvc
           .pushFileToStorage(this.id, this.currentFileUpload, metaData)
@@ -151,50 +129,12 @@ export class DownloadsFileComponent implements OnInit {
     });
   }
 
-  downloadFile(d: any) {
-    window.open(d.url, '_blank');
-    // this.http.get(d.url).subscribe( (data:any) =>{
-    //   const blob = new Blob([data]);
-    //   const url= window.URL.createObjectURL(blob);
-    //   window.open(url);
-    // })
-    // const xhr = new XMLHttpRequest();
-    // xhr.responseType = 'blob';
-    // xhr.onload = (event) => {
-    //   const blob = xhr.response;
-    // };
-    // xhr.open('GET', d.url);
-    // xhr.send();
-    // console.log('rh1')
-    // const link = document.createElement('a');
-    // link.setAttribute('target', '_blank');
-    // link.setAttribute('href', d.url);
-    // link.setAttribute('download', `image.jpeg`);
-    // document.body.appendChild(link);
-    // link.click();
-    // link.remove();
-    // const link = this.renderer.createElement('a');
-    // link.setAttribute('target', '_blank');
-    // link.setAttribute('href', 'abc.net/files/test.ino');
-    // link.setAttribute('download', `products.csv`);
-    // link.click();
-    // link.remove();
-  }
-
   previewFile(d: any) {
-    this.playerSvc.playerData = d
-    this.playerSvc.playerData = d
-    if(d.fileType == 'video')
-    this.router.navigate(['player/video'])
-    else if(d.fileType == 'pdf')
-    this.router.navigate(['player/pdf'])
-    else  if(d.fileType == 'image')
-    this.router.navigate(['player/image'])
-    else
-    alert('Funcionality for pdf player under development')
-  }
-
-  fileTypeChange(e: any) {
-    this.fileType = e.target.value
+    // this.playerSvc.playerData = d;
+    // this.playerSvc.playerData = d;
+    // if (d.fileType == 'video') this.router.navigate(['player/video']);
+    // else if (d.fileType == 'pdf') this.router.navigate(['player/pdf']);
+    // else alert('Funcionality for pdf player under development');
+    this.router.navigate(['player/image']);
   }
 }

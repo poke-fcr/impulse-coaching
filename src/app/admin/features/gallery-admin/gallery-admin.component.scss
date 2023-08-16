@@ -1,15 +1,14 @@
-.heading {
-    color: var(--text-color-secondary);
-    font-weight: 600;
-}
-
 .file-row {
     display: flex;
     justify-content: space-between;
   }
   
-
-.file-cards {
+  .heading {
+    color: var(--text-color-secondary);
+    font-weight: 600;
+  }
+  
+  .file-cards {
     color: var(--text-color-secondary);
     cursor: pointer;
     // background-color: var(--highlight-color);
@@ -24,3 +23,4 @@
     justify-content: space-between;
     // margin: 8px;
   }
+  

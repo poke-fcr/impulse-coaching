@@ -35,8 +35,8 @@ export class FileUploadService {
             fileUpload.url = downloadURL;
             fileUpload.name = metaData.fileName
             fileUpload.fileType = metaData.fileType
-            fileUpload.previewAvailable = metaData.previewAvailable
-            fileUpload.downloadAvailable = metaData.downloadAvailable
+            fileUpload.previewAvailable = metaData?.previewAvailable || false
+            fileUpload.downloadAvailable = metaData?.downloadAvailable || false
             fileUpload.mimeType = metaData.mimeType
 
 
@@ -44,6 +44,7 @@ export class FileUploadService {
            //edit file upload!
  // fileUpload['title'] = 'Test title',
             // fileUpload.description = 'Test description'
+            console.log(basePath, fileUpload)
             this.saveFileData(basePath, fileUpload);
           });
         })

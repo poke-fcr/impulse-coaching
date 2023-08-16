@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BatchesComponent } from './features/batches/batches.component';
 import { DownloadsFileComponent } from './features/downloads-file/downloads-file.component';
 import { DownloadsComponent } from './features/downloads/downloads.component';
+import { GalleryAdminComponent } from './features/gallery-admin/gallery-admin.component';
 import { NoticesComponent } from './features/notices/notices.component';
 import { LoginComponent } from './login/login.component';
 
@@ -32,6 +33,11 @@ const routes: Routes = [
     path: 'notices',
     pathMatch: 'full',
     component: NoticesComponent,
+  },
+  {
+    path: 'gallery',
+    pathMatch: 'full',
+    component: GalleryAdminComponent,
   },
   {
     path: 'downloads',

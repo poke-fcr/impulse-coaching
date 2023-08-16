@@ -67,6 +67,8 @@ export class DownloadsFileComponent implements OnInit {
     this.playerSvc.playerData = d
     if(d.fileType == 'video')
     this.router.navigate(['player/video'])
+    else if(d.fileType == 'pdf')
+    this.router.navigate(['player/pdf'])
     else 
     alert('Funcionality for pdf player under development')
   }

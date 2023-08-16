@@ -1,0 +1,173 @@
+<div class="m-3">
+  <div class="file-row mb-2">
+    <h3 class="heading">Manage {{ title }}</h3>
+    <button
+      [disabled]="fetchStatus !== 'done'"
+      class="btn btn-primary"
+      (click)="openNewFileDialog(newFileDialog)"
+    >
+      <i class="bi bi-file-earmark-arrow-up"></i>
+      Add new image
+    </button>
+  </div>
+  <div class="row">
+    <ng-container *ngIf="fetchStatus === 'error'">
+      <h3 class="heading text-warn">
+        Whoops! We ran in some error! Try again later.
+      </h3>
+    </ng-container>
+    <ng-container *ngIf="fetchStatus === 'fetching'">
+      <div class="my-5 text-center">
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <div class="spinner-grow m-1 text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="fetchStatus === 'done'">
+      <div class="text-center m-5 row" *ngIf="!files.length">
+        <h4 class="heading">
+          Its so empty here. Get started by adding your first file here.
+        </h4>
+      </div>
+      <ng-container *ngIf="files.length">
+        <div class="row" style="align-items: center">
+          <div *ngFor="let f of files" class="col-6 col-md-4 col-lg-3">
+            <div
+              style="
+                background-color: #f9f1f0;
+                justify-content: center;
+                cursor: pointer;
+              "
+              class="card h-100 shadow rounded my-1 p-1"
+            >
+              <a
+                [href]="f.url"
+                data-lightbox="f.name"
+                data-title="{{ f.name }}"
+              >
+                <img
+                  height="170px"
+                  style="overflow: hidden"
+                  width="100%"
+                  class="ui bordered small image"
+                  [src]="f.url"
+                />
+              </a>
+              <div style="color: var(--text-color-secondary)" class="card-body">
+                <h5 class="card-title">
+                  {{ f.name || "File name not available" }}
+                </h5>
+                <!-- <span class="card-text">File Type:</span> -->
+                <div>
+                  <b>Mime Type </b>
+
+                  {{
+                    f.mimeType ||
+                      "mime type not available, preview may not work."
+                  }}
+                </div>
+                <div>
+                  <b>File Type </b>
+                  {{
+                    f.fileType ||
+                      "mime type not available, preview may not work."
+                  }}
+                </div>
+                <div>
+                  <b>Created on: </b>
+                  {{ (f.createdOn | date) || "NA." }}
+                </div>
+              </div>
+
+              <button
+                class="text-warn btn btn-danger"
+                (click)="$event.preventDefault(); deleteFile(f)"
+                style="position: absolute; right: 8px; bottom: 16px"
+              >
+                <i class="bi bi-trash3 text-warn"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- <img [src]="f.url" data-lightbox="image-1" *ngFor="let f of files" /> -->
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #newFileDialog let-newFileDialog>
+  <div class="modal-header">
+    <h4 class="modal-title">Upload New Image</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="newFileDialog.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <input
+      class="form-control"
+      type="text"
+      [(ngModel)]="fileName"
+      required
+      placeholder="Enter a unique file name"
+    />
+    <!-- <span class="text-small">Note: File name should be unique</span> -->
+    <input
+      #file
+      (change)="selectFile($event)"
+      class="form-control my-2"
+      type="file"
+      required
+    />
+    <span class="text-small"
+      >Note: File should be an image. Please preview after upload.</span
+    >
+
+    <div *ngIf="currentFileUpload" class="progress mt-2">
+      <div
+        class="progress-bar progress-bar-info"
+        role="progressbar"
+        attr.aria-valuenow="{{ percentage }}"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [ngStyle]="{ width: percentage + '%' }"
+      >
+        {{ percentage }}%
+      </div>
+    </div>
+
+    <!-- app.component.html -->
+  </div>
+  <div class="modal-footer">
+    <button
+      [disabled]="!fileName.length || !selectedFiles || fetchStatus !== 'done'"
+      type="submit"
+      class="btn btn-primary"
+      (click)="uploadFile()"
+    >
+      Upload
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-light"
+      (click)="newFileDialog.close('Close click')"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>

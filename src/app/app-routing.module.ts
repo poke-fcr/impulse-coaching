@@ -21,6 +21,11 @@ const routes: Routes = [
     component: ContactUsComponent,
   },
   {
+    path: 'galllery',
+    pathMatch: 'full',
+    component: GalleryComponent,
+  },
+  {
     path: 'about-us',
     pathMatch: 'full',
     component: AboutUsComponent,

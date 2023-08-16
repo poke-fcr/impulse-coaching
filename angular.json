@@ -27,9 +27,12 @@
             "styles": [
               "src/styles.scss",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-              "video.js/dist/video-js.css"
+              "video.js/dist/video-js.css",
+              "lightbox2/dist/css/lightbox.css"
             ],
-            "scripts": []
+            "scripts": [
+              "lightbox2/dist/js/lightbox-plus-jquery.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -89,9 +92,7 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         }

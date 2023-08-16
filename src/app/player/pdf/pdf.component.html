@@ -1,0 +1,33 @@
+<ng-container *ngIf="fetchStatus === 'error'">
+    <h3 class="heading text-warn">
+      Whoops! We ran in some error! Try again later.
+    </h3>
+  </ng-container>
+
+  <ng-container *ngIf="fetchStatus === 'fetching'">
+    <div class="mt-5 text-center">
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <div class="spinner-grow m-1 text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+    </div>
+  </ng-container>
+
+
+<pdf-viewer [src]="pdfSrc"
+              [render-text]="true"
+              [original-size]="false"
+              (after-load-complete)="callBackFn($event)"
+              (error)="onError($event)"
+  ></pdf-viewer>
