@@ -9,7 +9,7 @@
       <i class="bi bi-file-earmark-arrow-up"></i>
       Add new image
     </button>
-  </div>
+    </div>
   <div class="row">
     <ng-container *ngIf="fetchStatus === 'error'">
       <h3 class="heading text-warn">
@@ -43,64 +43,69 @@
       </div>
       <ng-container *ngIf="files.length">
         <div class="row" style="align-items: center">
-          <div *ngFor="let f of files" class="col-6 col-md-4 col-lg-3">
-            <div
-              style="
-                background-color: #f9f1f0;
-                justify-content: center;
-                cursor: pointer;
-              "
-              class="card h-100 shadow rounded my-1 p-1"
-            >
-              <a
-                [href]="f.url"
-                data-lightbox="f.name"
-                data-title="{{ f.name }}"
+            <div *ngFor="let f of files" class="col-12 col-md-4 col-lg-3">
+              <div
+                style="
+                  background-color: #f9f1f0;
+                  justify-content: center;
+                  cursor: pointer;
+                "
+                class="card h-100 shadow rounded my-1 p-1"
               >
-                <img
-                  height="170px"
-                  style="overflow: hidden"
-                  width="100%"
-                  class="ui bordered small image"
-                  [src]="f.url"
-                />
-              </a>
-              <div style="color: var(--text-color-secondary)" class="card-body">
-                <h5 class="card-title">
-                  {{ f.name || "File name not available" }}
-                </h5>
-                <!-- <span class="card-text">File Type:</span> -->
-                <div>
-                  <b>Mime Type </b>
-
-                  {{
-                    f.mimeType ||
-                      "mime type not available, preview may not work."
-                  }}
+                <a
+                  [href]="f.url"
+                  data-lightbox="f.name"
+                  data-title="{{ f.name }}"
+                 
+                  style="overflow: hidden; height: 160px"
+                >
+                 
+                  <img
+                 
+                    width="100%"
+                    class="ui bordered small image"
+                    [src]="f.url"
+                  />
+                </a>
+                <div style="color: var(--text-color-secondary)" class="card-body">
+                  <h5 class="card-title one-line-text">
+                    {{ f.name || "File name not available" }}
+                  </h5>
+                  <!-- <span class="card-text">File Type:</span> -->
+                  <div>
+                    <b>Mime Type </b>
+  
+                    {{
+                      f.mimeType ||
+                        "mime type not available, preview may not work."
+                    }}
+                  </div>
+                  <div>
+                    <b>File Type </b>
+                    {{
+                      f.fileType ||
+                        "mime type not available, preview may not work."
+                    }}
+                  </div>
+                  <div>
+                    <b>Created on: </b>
+                    {{
+                      (f.createdOn | date) ||
+                        "NA."
+                    }}
+                  </div>
                 </div>
-                <div>
-                  <b>File Type </b>
-                  {{
-                    f.fileType ||
-                      "mime type not available, preview may not work."
-                  }}
-                </div>
-                <div>
-                  <b>Created on: </b>
-                  {{ (f.createdOn | date) || "NA." }}
-                </div>
+               
+                  <button
+                  class="text-warn btn btn-danger"
+                  (click)="$event.preventDefault(); deleteFile(f)"
+                  style="position: absolute; right: 8px; bottom: 16px"
+                >
+                  <i class="bi bi-trash3 text-warn"></i> 
+                </button>       
               </div>
-
-              <button
-                class="text-warn btn btn-danger"
-                (click)="$event.preventDefault(); deleteFile(f)"
-                style="position: absolute; right: 8px; bottom: 16px"
-              >
-                <i class="bi bi-trash3 text-warn"></i>
-              </button>
             </div>
           </div>
-        </div>
         <!-- <img [src]="f.url" data-lightbox="image-1" *ngFor="let f of files" /> -->
       </ng-container>
     </ng-container>

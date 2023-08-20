@@ -5,12 +5,14 @@ import { PlayerRoutingModule } from './player-routing.module';
 import { VideoComponent } from './video/video.component';
 import { PdfComponent } from './pdf/pdf.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ImageComponent } from './image/image.component';
 
 
 @NgModule({
   declarations: [
     VideoComponent,
-    PdfComponent
+    PdfComponent,
+    ImageComponent
   ],
   imports: [
     CommonModule,

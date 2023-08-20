@@ -36,7 +36,7 @@
       </div>
       <ng-container *ngIf="files.length">
         <div class="row" style="align-items: center">
-            <div *ngFor="let f of files" class="col-6 col-md-4 col-lg-3">
+            <div *ngFor="let f of files" class="col-12 col-md-4 col-lg-3">
               <div
                 style="
                   background-color: #f9f1f0;
@@ -49,18 +49,19 @@
                   [href]="f.url"
                   data-lightbox="f.name"
                   data-title="{{ f.name }}"
+                 
+                  style="overflow: hidden; height: 160px"
                 >
                  
                   <img
-                    height="170px"
-                    style="overflow: hidden"
+                 
                     width="100%"
                     class="ui bordered small image"
                     [src]="f.url"
                   />
                 </a>
                 <div style="color: var(--text-color-secondary)" class="card-body">
-                  <h5 class="card-title">
+                  <h5 class="card-title one-line-text">
                     {{ f.name || "File name not available" }}
                   </h5>
                   <!-- <span class="card-text">File Type:</span> -->

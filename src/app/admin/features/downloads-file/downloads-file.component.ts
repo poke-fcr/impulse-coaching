@@ -88,6 +88,7 @@ export class DownloadsFileComponent implements OnInit {
         this.previewAvailable = false;
         this.downloadAvailable = false;
         this.percentage = 0;
+        this.fileType = ''
         console.log('dismissed');
       },
     });
@@ -100,6 +101,7 @@ export class DownloadsFileComponent implements OnInit {
         this.selectedFiles = undefined;
         this.currentFileUpload = undefined;
         this.percentage = 0;
+        this.fileType = ''
 
         // this.folderName = '';
       },

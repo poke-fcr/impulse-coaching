@@ -24,3 +24,11 @@
     justify-content: space-between;
     // margin: 8px;
   }
+
+  .one-line-text {
+    display: inline-block;
+    width: -webkit-fill-available;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
