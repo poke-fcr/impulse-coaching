@@ -36,48 +36,55 @@
   </ng-container>
   <ng-container *ngIf="batchStatus === 'done'">
     <div class="row g-2">
-      <div class="col-md-6" *ngFor="let batch of batches">
-        <div class="p-2 batch-cards shadow rounded">
-          <h3 class="heading">{{ batch.batchName || "Batch" }}</h3>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Day</th>
-                <th scope="col">Start Time</th>
-                <th scope="col">End Time</th>
-              </tr>
-            </thead>
+      <ng-container *ngIf="batches.length">
+        <div class="col-md-6" *ngFor="let batch of batches">
+          <div class="p-2 batch-cards shadow rounded">
+            <h3 class="heading">{{ batch.batchName || "Batch" }}</h3>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Day</th>
+                  <th scope="col">Start Time</th>
+                  <th scope="col">End Time</th>
+                </tr>
+              </thead>
 
-            <ng-container *ngFor="let wd of batch?.weekDay">
-              <tr>
-                <td scope="row">{{ wd.day | titlecase }}</td>
-                <ng-container *ngIf="wd?.isHoliday">
-                  <td>{{ "Holiday" }}</td>
-                  <td>{{ "Holiday" }}</td>
-                </ng-container>
-                <ng-container *ngIf="!wd?.isHoliday">
-                  <td>{{ wd?.startTime || "Holiday" }}</td>
-                  <td>{{ wd?.endTime || "Holiday" }}</td>
-                </ng-container>
-              </tr>
-            </ng-container>
-          </table>
-          <div>
-            <button
-              class="btn btn-danger m-2"
-              (click)="deleteBatch(batch.batchId)"
-            >
-              Delete
-            </button>
-            <button
-              class="btn btn-secondary m-2"
-              (click)="editBatch(batch, content)"
-            >
-              Edit
-            </button>
+              <ng-container *ngFor="let wd of batch?.weekDay">
+                <tr>
+                  <td scope="row">{{ wd.day | titlecase }}</td>
+                  <ng-container *ngIf="wd?.isHoliday">
+                    <td>{{ "Holiday" }}</td>
+                    <td>{{ "Holiday" }}</td>
+                  </ng-container>
+                  <ng-container *ngIf="!wd?.isHoliday">
+                    <td>{{ wd?.startTime  || "Holiday" }}</td>
+                    <td>{{ wd?.endTime || "Holiday" }}</td>
+                  </ng-container>
+                </tr>
+              </ng-container>
+            </table>
+            <div>
+              <button
+                class="btn btn-danger m-2"
+                (click)="deleteBatch(batch.batchId)"
+              >
+                Delete
+              </button>
+              <button
+                class="btn btn-secondary m-2"
+                (click)="editBatch(batch, content)"
+              >
+                Edit
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-container>
+      <ng-container *ngIf="!batches.length">
+        <h3 class="heading text-info text-center my-5">
+          It feels so empty here. Lets get started by creating a new batch!
+        </h3>
+      </ng-container>
     </div>
   </ng-container>
 </div>
