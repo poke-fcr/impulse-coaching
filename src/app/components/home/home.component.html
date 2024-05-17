@@ -72,7 +72,7 @@
     ></button>
   </div>
   <div class="modal-body" style="max-height:80vh; overflow-y:scroll;">
-    <ng-container *ngFor="let notice of notices.reverse(); let i = index">
+    <ng-container *ngFor="let notice of notices; let i = index">
       <div class="notice-card">
         <h4 class="heading">{{notice.title}}</h4>
         <div [innerHTML]="notice.description"></div> 
