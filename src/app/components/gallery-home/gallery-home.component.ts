@@ -45,7 +45,7 @@ export class GalleryHomeComponent implements OnInit {
       .subscribe(
         (fileUploads) => {
           console.log('rh', fileUploads);
-          this.files = fileUploads;
+          this.files = fileUploads.reverse();
           this.fetchStatus = 'done';
         },
         (_e) => {
