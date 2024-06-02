@@ -23,8 +23,8 @@ export class HomeComponent implements AfterViewInit {
     if (!this.noticeSvc.noticeLoaded)
       this.noticeSvc.getNotices().subscribe({
         next: (notices: any) => {
-          this.notices = notices;
-          if (this.notices.length && !this.noticeSvc.noticeLoaded) {
+          if (notices.length && Array.isArray(notices) && !this.noticeSvc.noticeLoaded) {
+          this.notices = notices.reverse();
             this.noticeSvc.noticeLoaded = true;
             this.ngbModal.open(this.noticeDialog, {
               size: 'lg',
