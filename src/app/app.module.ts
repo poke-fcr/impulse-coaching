@@ -27,6 +27,7 @@ import { NoticesService } from './services/firestore/notices.service';
 import { DownloadsHomeComponent } from './components/downloads-home/downloads-home.component';
 import { DownloadsFileComponent } from './components/downloads-file/downloads-file.component';
 import { PlayerService } from './services/player/player.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { PlayerService } from './services/player/player.service';
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    SharedModule
   ],
   providers: [
     AppService,

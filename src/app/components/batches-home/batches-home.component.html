@@ -48,8 +48,8 @@
                 <td>{{ "Holiday" }}</td>
               </ng-container>
               <ng-container *ngIf="!wd?.isHoliday">
-                <td>{{ wd?.startTime || "Holiday" }}</td>
-                <td>{{ wd?.endTime || "Holiday" }}</td>
+                <td>{{ wd?.startTime | shortTime }}</td>
+                <td>{{ wd?.endTime | shortTime}}</td>
               </ng-container>
             </tr>
           </ng-container>
